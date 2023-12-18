@@ -33,6 +33,7 @@ public class GamePanel extends JPanel implements  Runnable{
      BufferedImage tempScreen;
 
      Graphics2D g2;
+     public boolean fullScreanOn = false;
 
     //FPS
     int FPS =60;
@@ -68,6 +69,8 @@ public class GamePanel extends JPanel implements  Runnable{
     public  final  int PauseState = 2;
     public  final  int dialogusState = 3;
     public  final  int charactersState =4;
+    public  final  int optionlaState = 5;
+
 
 
 
@@ -85,7 +88,6 @@ public class GamePanel extends JPanel implements  Runnable{
        aSetter.setNPC();
        aSetter.setMonster();
        aSetter.setInteractiveTile();
-        playMusic(0);
        gameState = titelState;
 
         tempScreen = new BufferedImage(screenWidh, screenHeight, BufferedImage.TYPE_INT_ARGB);
@@ -97,6 +99,7 @@ public class GamePanel extends JPanel implements  Runnable{
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             GraphicsDevice gd = ge.getDefaultScreenDevice();
             gd.setFullScreenWindow(window);
+
         screanWidh2 = window.getWidth();
         screanHeight2 = window.getHeight();
     }

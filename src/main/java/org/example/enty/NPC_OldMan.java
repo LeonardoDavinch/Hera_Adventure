@@ -40,8 +40,10 @@ public class NPC_OldMan extends  Entyti{
 
         dialogues[0] = "Hello lad";
         dialogues[1] = "So you've come to this island to \nfind the reasure ?";
-        dialogues[2] = "I used to be a great wisard but now..... \nI'm a bit too old for taking an adventure,";
-        dialogues[3] = "Well, good luck on you.";
+        dialogues[2] = "I used to be a great warrior,but now.....\nI'm a bit too old for taking an adventure,";
+        dialogues[3] = "Be careful on the island,\nthere is danger at every step";
+        dialogues[4] = "But I see you are a very brave boy";
+        dialogues[5] = "Well, good luck on you.";
 
     }
     public  void  getImage(){

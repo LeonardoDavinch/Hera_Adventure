@@ -22,7 +22,7 @@ public class Projectile extends  Entyti{
             int monsterIndex = gp.oChecker.checkEntity(this,gp.monster);
             if(monsterIndex != 999){
                 gp.player.damageMonster(monsterIndex,attack);
-                generateParticle(user.projectile,gp.monster[monsterIndex]);
+                generateParticle(user.projectile,gp.monster[gp.currentMap][monsterIndex]);
                 alive=false;
             }
 

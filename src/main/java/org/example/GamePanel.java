@@ -27,6 +27,8 @@ public class GamePanel extends JPanel implements  Runnable{
     //World setting
     public  final  int maxWorldCol = 50;
     public  final  int maxWorldRow =50;
+    public  final  int maxMap  = 10;
+    public   int currentMap  = 0;
     //for full screan
       int screanWidh2 = screenWidh;
       int screanHeight2 = screenHeight;
@@ -52,10 +54,10 @@ public class GamePanel extends JPanel implements  Runnable{
 
     //Entitty object
     public Player player = new Player(this,keyH);
-    public Entyti obj[] = new Entyti[20];
-    public Entyti npc[] = new Entyti[10];
-    public  Entyti monster[] = new Entyti[20];
-    public InteractiveTille iTile[] = new InteractiveTille[50];
+    public Entyti obj[][] = new Entyti[maxMap][20];
+    public Entyti npc[][] = new Entyti[maxMap][10];
+    public  Entyti monster[][] = new Entyti[maxMap][20];
+    public InteractiveTille iTile[][] = new InteractiveTille[maxMap][50];
     public ArrayList<Entyti> projectList = new ArrayList<>();
     public  ArrayList<Entyti> particleList = new ArrayList<>();
     public ArrayList<Entyti> entytiList = new ArrayList<>();
@@ -172,20 +174,20 @@ public class GamePanel extends JPanel implements  Runnable{
             //Player
             player.update();
             //Npc
-            for (int i = 0; i < npc.length; i++) {
-                if(npc[i] != null){
-                    npc[i].update();
+            for (int i = 0; i < npc[1].length; i++) {
+                if(npc[currentMap] [i] != null){
+                    npc[currentMap][i].update();
                 }
             }
             //monster
-            for (int i = 0; i <monster.length ; i++) {
-                if( monster[i] != null){
-                    if(monster[i].alive == true && monster[i].dyling == false){
-                        monster[i].update();
+            for (int i = 0; i <monster[1].length ; i++) {
+                if( monster[currentMap][i] != null){
+                    if(monster[currentMap][i].alive == true && monster[currentMap][i].dyling == false){
+                        monster[currentMap][i].update();
                     }
-                    if(monster[i].alive == false){
-                        monster[i].checkDrop();
-                        monster[i] = null;
+                    if(monster[currentMap][i].alive == false){
+                        monster[currentMap][i].checkDrop();
+                        monster[currentMap][i] = null;
                     }
 
                 }
@@ -211,9 +213,9 @@ public class GamePanel extends JPanel implements  Runnable{
                 }
             }
             //tree list
-            for(int  i= 0; i < iTile.length ; i++) {
-                if(iTile[i] != null){
-                    iTile[i].update();
+            for(int  i= 0; i < iTile[1].length ; i++) {
+                if(iTile[currentMap][i] != null){
+                    iTile[currentMap][i].update();
                 }
             }
         }
@@ -241,30 +243,30 @@ public class GamePanel extends JPanel implements  Runnable{
             titleManeger.draw(g2);
 
             //interactive tille
-            for (int i = 0; i < iTile.length; i++) {
-                if(iTile[i] != null){
-                    iTile[i].draw(g2);
+            for (int i = 0; i < iTile[1].length; i++) {
+                if(iTile[currentMap][i] != null){
+                    iTile[currentMap][i].draw(g2);
                 }
             }
 
             //add entity to list
             entytiList.add(player);
 
-            for (int i = 0; i <npc.length ; i++) {
-                if(npc[i] != null){
-                    entytiList.add(npc[i]);
+            for (int i = 0; i <npc[1].length ; i++) {
+                if(npc[currentMap][i] != null){
+                    entytiList.add(npc[currentMap][i]);
                 }
             }
 
-            for (int i = 0; i <obj.length ; i++) {
-                if(obj[i] !=null){
-                    entytiList.add(obj[i]);
+            for (int i = 0; i <obj[1].length ; i++) {
+                if(obj[currentMap][i] !=null){
+                    entytiList.add(obj[currentMap][i]);
                 }
             }
 
-            for (int i = 0; i <monster.length ; i++) {
-                if(monster[i] != null){
-                    entytiList.add(monster[i]);
+            for (int i = 0; i <monster[1].length ; i++) {
+                if(monster[currentMap][i] != null){
+                    entytiList.add(monster[currentMap][i]);
                 }
             }
             for (int i = 0; i <projectList.size() ; i++) {

@@ -54,6 +54,9 @@ public class Player extends  Entyti{
 
         worldX = gp.tileSize * 23;
         worldY = gp.tileSize * 21;
+/*        worldX = gp.tileSize * 12;
+        worldY = gp.tileSize * 13;*/
+
 
         speed = 4;
         directory = "down";
@@ -242,6 +245,8 @@ public class Player extends  Entyti{
         }
         if(life < 0 ){
             gp.gameState = gp.gameOverState;
+            gp.ui.comandNum -= 1 ;
+            gp.stopMusic();
             gp.playSE(12);
         }
     }
@@ -290,10 +295,10 @@ public class Player extends  Entyti{
     public  void  pickUpObject(int i){
         if(i != 999){
             //pickup only items
-                if(gp.obj[i].type == type_pickupOnly){
+                if(gp.obj[gp.currentMap][i].type == type_pickupOnly){
 
-                gp.obj[i].use(this);
-                gp.obj[i] = null;
+                gp.obj[gp.currentMap][i].use(this);
+                gp.obj[gp.currentMap][i] = null;
 
                 }
 
@@ -302,15 +307,15 @@ public class Player extends  Entyti{
                     String  text ;
                     if(inventory.size() != maxInventorySize){
 
-                        inventory.add(gp.obj[i]);
+                        inventory.add(gp.obj[gp.currentMap][i]);
                         gp.playSE(1);
-                        text = "Got a "+ gp.obj[i].name+"!";
+                        text = "Got a "+ gp.obj[gp.currentMap][i].name+"!";
 
                     }else {
                         text = "You cannot carry any more!";
                     }
                     gp.ui.addMesage(text);
-                    gp.obj[i]=null;
+                    gp.obj[gp.currentMap][i]=null;
                 }
 
         }
@@ -322,7 +327,7 @@ public class Player extends  Entyti{
             if(i !=999){
                      attacCanceled = true;
                     gp.gameState = gp.dialogusState;
-                    gp.npc[i].speak();
+                    gp.npc[gp.currentMap][i].speak();
             }
         }
 
@@ -331,10 +336,10 @@ public class Player extends  Entyti{
     public  void  contactMonster(int i){
 
         if( i != 999){
-            if(invicible == false && gp.monster[i].dyling == false){
+            if(invicible == false && gp.monster[gp.currentMap][i].dyling == false){
                 gp.playSE(6);
 
-                int damage = gp.monster[i].attack - defense;
+                int damage = gp.monster[gp.currentMap][i].attack - defense;
                 if(damage < 0 ){
                     damage = 0;
                 }
@@ -346,26 +351,26 @@ public class Player extends  Entyti{
     }
     public  void  damageMonster(int i ,int attack){
         if( i != 999) {
-            if (gp.monster[i].invicible == false) {
+            if (gp.monster[gp.currentMap][i].invicible == false) {
 
                 gp.playSE(5);
 
-                int damage = attack - gp.monster[i].defense;
+                int damage = attack - gp.monster[gp.currentMap][i].defense;
                 if (damage < 0) {
                     damage = 0;
                 }
-                gp.monster[i].life -= damage;
+                gp.monster[gp.currentMap][i].life -= damage;
                 gp.ui.addMesage(damage + "damage!");
 
-                gp.monster[i].invicible = true;
-                gp.monster[i].damageReaction();
+                gp.monster[gp.currentMap][i].invicible = true;
+                gp.monster[gp.currentMap][i].damageReaction();
 
-                if (gp.monster[i].life <= 0) {
-                    gp.monster[i].life = 0;
-                    gp.monster[i].dyling = true;
-                    gp.ui.addMesage("Kiled the " + gp.monster[i].name + "!");
-                    gp.ui.addMesage("Exp " + gp.monster[i].exp);
-                    exp +=gp.monster[i].exp;
+                if (gp.monster[gp.currentMap][i].life <= 0) {
+                    gp.monster[gp.currentMap][i].life = 0;
+                    gp.monster[gp.currentMap][i].dyling = true;
+                    gp.ui.addMesage("Kiled the " + gp.monster[gp.currentMap][i].name + "!");
+                    gp.ui.addMesage("Exp " + gp.monster[gp.currentMap][i].exp);
+                    exp +=gp.monster[gp.currentMap][i].exp;
                     checkLevelUp();
                     respawnMonster(i,10000);
 
@@ -379,9 +384,9 @@ public class Player extends  Entyti{
                     @Override
                     public void run() {
                         // Respawn the monster at the same location
-                        gp.monster[monsterIndex] = new MON_GreanSlime(gp);
-                        gp.monster[monsterIndex].worldX = gp.tileSize * 22; // Change to the appropriate respawn location
-                        gp.monster[monsterIndex].worldY = gp.tileSize * 38; // Change to the appropriate respawn location
+                        gp.monster[gp.currentMap][monsterIndex] = new MON_GreanSlime(gp);
+                        gp.monster[gp.currentMap][monsterIndex].worldX = gp.tileSize * 22; // Change to the appropriate respawn location
+                        gp.monster[gp.currentMap][monsterIndex].worldY = gp.tileSize * 38; // Change to the appropriate respawn location
                     }
                 },
                 respawnDelay
@@ -390,19 +395,19 @@ public class Player extends  Entyti{
 
     public  void  damageInteractiveTille(int i){
 
-        if(i != 999 && gp.iTile[i].destructible == true
-                && gp.iTile[i].isCorrectItem(this)== true
-                && gp.iTile[i].invicible == false){
+        if(i != 999 && gp.iTile[gp.currentMap][i].destructible == true
+                && gp.iTile[gp.currentMap][i].isCorrectItem(this)== true
+                && gp.iTile[gp.currentMap][i].invicible == false){
 
-            gp.iTile[i].playSe();
-            gp.iTile[i].life--;
-            gp.iTile[i].invicible = true;
+            gp.iTile[gp.currentMap][i].playSe();
+            gp.iTile[gp.currentMap][i].life--;
+            gp.iTile[gp.currentMap][i].invicible = true;
 
             //generator destroy tree
-            generateParticle(gp.iTile[i],gp.iTile[i]);
+            generateParticle(gp.iTile[gp.currentMap][i],gp.iTile[gp.currentMap][i]);
 
-            if(gp.iTile[i].life == 0 ) {
-                gp.iTile[i] = gp.iTile[i].getDestroyedFrom();
+            if(gp.iTile[gp.currentMap][i].life == 0 ) {
+                gp.iTile[gp.currentMap][i] = gp.iTile[gp.currentMap][i].getDestroyedFrom();
             }
         }
     }

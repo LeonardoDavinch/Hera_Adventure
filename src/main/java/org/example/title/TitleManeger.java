@@ -15,18 +15,19 @@ public class TitleManeger {
     GamePanel gp;
     public  Tile []tiles;
 
-    public int mapTitelNumber[][];
+    public int mapTitelNumber[][][];
     public  TitleManeger(GamePanel gp){
         this.gp=gp;
 
         tiles=new Tile[50];
-        mapTitelNumber = new int[gp.maxWorldCol][gp.maxWorldRow];
+        mapTitelNumber = new int [gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
 
         getTitelImage();
-        loadMap("/Map/worldV2.txt");
+        loadMap("/Map/worldV2.txt",0);
+        loadMap("/Map/interior01.txt",1);
     }
 
-    public  void  loadMap(String filePath){
+    public  void  loadMap(String filePath , int map){
         try{
             InputStream is=getClass().getResourceAsStream(filePath);
             BufferedReader br=new BufferedReader(new InputStreamReader(is));
@@ -44,7 +45,7 @@ public class TitleManeger {
 
                     int num = Integer.parseInt(numbers[cool]);
 
-                    mapTitelNumber[cool][row] = num;
+                    mapTitelNumber[map][cool][row] = num;
                     cool++;
                 }
                 if(cool == gp.maxWorldCol){
@@ -104,7 +105,12 @@ public class TitleManeger {
            setup(39,"earth",false);
            setup(40,"wall",true);
            setup(41,"tree",true);
-           setup(42,"trunk",true);
+
+
+            setup(42,"hut",false);
+            setup(43,"floor01",false);
+            setup(44,"table01",true);
+
 
 
     }
@@ -129,7 +135,7 @@ public class TitleManeger {
 
        while (WorldCool < gp.maxWorldCol && WorldRow < gp.maxWorldRow){
 
-           int titelNum = mapTitelNumber[WorldCool][WorldRow];
+           int titelNum = mapTitelNumber[gp.currentMap][WorldCool][WorldRow];
 
            int worldX = WorldCool * gp.tileSize;
            int worldY =  WorldRow * gp.tileSize;

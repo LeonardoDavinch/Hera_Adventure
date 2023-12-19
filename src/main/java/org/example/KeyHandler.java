@@ -129,7 +129,11 @@ public class KeyHandler implements KeyListener {
             }
         }
         if(code == KeyEvent.VK_R) {
-            gp.titleManeger.loadMap("/Map/worldV2.txt");
+            switch (gp.currentMap){
+                case 0:gp.titleManeger.loadMap("/Map/worldV2.txt",0);break;
+                case 1:gp.titleManeger.loadMap("/Map/interior01.txt",1);break;
+            }
+
         }
     }
 
@@ -256,6 +260,7 @@ public class KeyHandler implements KeyListener {
             if(gp.ui.comandNum == 0){
                 gp.gameState = gp.PlayState ;
                 gp.retry();
+                gp.playMusic(0);
 
             }
             else  if(gp.ui.comandNum == 1){

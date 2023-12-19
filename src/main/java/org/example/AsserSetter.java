@@ -31,12 +31,12 @@ public class AsserSetter {
         gp.obj[i].worldY = gp.tileSize * 21;
         i++;
         gp.obj[i] = new OBJ_Axe(gp);
-        gp.obj[i].worldX = gp.tileSize * 35;
-        gp.obj[i].worldY = gp.tileSize * 9;
+        gp.obj[i].worldX = gp.tileSize * 33;
+        gp.obj[i].worldY = gp.tileSize * 7;
         i++;
         gp.obj[i] = new OBJ_Shield_Blue(gp);
-        gp.obj[i].worldX = gp.tileSize * 35;
-        gp.obj[i].worldY = gp.tileSize * 21;
+        gp.obj[i].worldX = gp.tileSize * 30;
+        gp.obj[i].worldY = gp.tileSize * 29;
         i++;
         gp.obj[i] = new OBJ_Potion_Red(gp);
         gp.obj[i].worldX = gp.tileSize * 22;
@@ -85,6 +85,10 @@ public class AsserSetter {
         gp.iTile[i] = new IT_DryTree(gp,33,12);i++;
         gp.iTile[i] = new IT_DryTree(gp,29,21);i++;
         gp.iTile[i] = new IT_DryTree(gp,36,30);i++;
+        gp.iTile[i] = new IT_DryTree(gp,34,28);i++;
+        gp.iTile[i] = new IT_DryTree(gp,33,28);i++;
+        gp.iTile[i] = new IT_DryTree(gp,32,28);i++;
+        gp.iTile[i] = new IT_DryTree(gp,31,28);i++;
 
 
 

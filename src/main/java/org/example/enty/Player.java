@@ -76,7 +76,21 @@ public class Player extends  Entyti{
         attack = getAttack();
         defense = getDefense();
     }
+    public  void  setDefaultPostions(){
+        worldX = gp.tileSize * 23;
+        worldY = gp.tileSize * 21;
+        directory = "down";
+    }
+    public  void  restoreLifeAndMan(){
+
+        life = maxLife;
+        mana = maxMana;
+        invicible = false;
+
+    }
     public  void  setItems(){
+
+        inventory.clear();
         inventory.add(currentWeapon);
         inventory.add(currentShiled);
         inventory.add(new OBJ_Key(gp));
@@ -225,6 +239,10 @@ public class Player extends  Entyti{
         }
         if(mana > maxMana){
             mana = maxMana;
+        }
+        if(life < 0 ){
+            gp.gameState = gp.gameOverState;
+            gp.playSE(12);
         }
     }
     public  void  attacing(){

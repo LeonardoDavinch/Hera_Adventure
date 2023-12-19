@@ -2,6 +2,7 @@ package org.example;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.security.Key;
 
 public class KeyHandler implements KeyListener {
     GamePanel gp;
@@ -50,6 +51,10 @@ public class KeyHandler implements KeyListener {
         //optionals state
         else if (gp.gameState ==gp.optionlaState) {
             optionsState(code);
+        }
+        //Game over state
+        else if (gp.gameState ==gp.gameOverState) {
+            gameOverState(code);
         }
 
 
@@ -230,8 +235,34 @@ public class KeyHandler implements KeyListener {
             }
         }
 
+    }
+    public  void  gameOverState(int code){
 
+        if(code == KeyEvent.VK_W){
+            gp.ui.comandNum --;
+            if(gp.ui.comandNum < 0){
+                gp.ui.comandNum = 1;
+            }
+            gp.playSE(9);
+        }
+        if(code == KeyEvent.VK_S){
+            gp.ui.comandNum ++;
+            if(gp.ui.comandNum > 1){
+                gp.ui.comandNum = 0;
+            }
+            gp.playSE(9);
+        }
+        if(code == KeyEvent.VK_ENTER){
+            if(gp.ui.comandNum == 0){
+                gp.gameState = gp.PlayState ;
+                gp.retry();
 
+            }
+            else  if(gp.ui.comandNum == 1){
+                gp.gameState = gp.tileSize;
+                gp.restart();
+            }
+        }
     }
 
     @Override

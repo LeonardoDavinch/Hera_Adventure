@@ -12,11 +12,16 @@ public class App {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("Hera's Adventure ");
-        //window.setUndecorated(true);
+
 
 
         GamePanel gamePanel=new GamePanel();
         window.add(gamePanel);
+
+        gamePanel.config.loadConfig();
+        if(gamePanel.fullScreanOn == true){
+            window.setUndecorated(true);
+        }
 
         window.pack();
 

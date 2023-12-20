@@ -15,6 +15,7 @@ public class OBJ_Sword_Normal extends Entyti {
         attacArea.width = 36;
         attacArea.height = 36;
         description = "["+name+"]\nAn old sword.";
+        price = 20;
 
     }
 }

@@ -2,16 +2,15 @@ package org.example;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.security.Key;
 
 public class KeyHandler implements KeyListener {
     GamePanel gp;
 
-    public  boolean upPressed, downPressed,leftPressed,rightPressed, enterPressed,shotKeyPressed;
-    public  boolean showDebagText = false;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, shotKeyPressed;
+    public boolean showDebagText = false;
 
-    public  KeyHandler(GamePanel gp){
-        this.gp=gp;
+    public KeyHandler(GamePanel gp) {
+        this.gp = gp;
     }
 
     @Override
@@ -25,214 +24,206 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
 
         //tile state menu
-        if(gp.gameState == gp.titelState){
+        if (gp.gameState == gp.titelState) {
             titleStacte(code);
         }
 
         //Play game
-       else if(gp.gameState == gp.PlayState){
-             playState(code);
+        else if (gp.gameState == gp.PlayState) {
+            playState(code);
         }
         //Pause State
-        else if(gp.gameState == gp.PauseState){
+        else if (gp.gameState == gp.PauseState) {
             pauseState(code);
 
         }
 
         //dialoge state
-       else  if(gp.gameState == gp.dialogusState){
+        else if (gp.gameState == gp.dialogusState) {
             dialogeState(code);
         }
 
-       //character state
-        else if (gp.gameState ==gp.charactersState) {
+        //character state
+        else if (gp.gameState == gp.charactersState) {
             characterState(code);
         }
         //optionals state
-        else if (gp.gameState ==gp.optionlaState) {
+        else if (gp.gameState == gp.optionlaState) {
             optionsState(code);
         }
         //Game over state
-        else if (gp.gameState ==gp.gameOverState) {
+        else if (gp.gameState == gp.gameOverState) {
             gameOverState(code);
         }
+        //Trade state
+        else if (gp.gameState == gp.tradeState) {
+            tradeState(code);
+        }
 
 
     }
 
-    public  void  titleStacte (int code){
+    public void titleStacte(int code) {
 
-            if(code == KeyEvent.VK_W){
-                gp.ui.comandNum--;
-                if(gp.ui.comandNum < 0){
-                    gp.ui.comandNum = 2;
-                }
+        if (code == KeyEvent.VK_W) {
+            gp.ui.comandNum--;
+            if (gp.ui.comandNum < 0) {
+                gp.ui.comandNum = 2;
             }
+        }
 
-            if(code == KeyEvent.VK_S){
-                gp.ui.comandNum++;
-                if(gp.ui.comandNum > 2){
-                    gp.ui.comandNum = 0;
-                }
+        if (code == KeyEvent.VK_S) {
+            gp.ui.comandNum++;
+            if (gp.ui.comandNum > 2) {
+                gp.ui.comandNum = 0;
             }
-            if(code == KeyEvent.VK_ENTER){
-                if(gp.ui.comandNum == 0){
+        }
+        if (code == KeyEvent.VK_ENTER) {
+            if (gp.ui.comandNum == 0) {
                 gp.gameState = gp.PlayState;
                 gp.playMusic(0);
-                }
-                if(gp.ui.comandNum == 1){
-                    //add later
-                }
-                if(gp.ui.comandNum == 2){
-                    System.exit(0);
-                }
-
+            }
+            if (gp.ui.comandNum == 1) {
+                //add later
+            }
+            if (gp.ui.comandNum == 2) {
+                System.exit(0);
             }
 
+        }
+
     }
-    public  void  playState(int code){
-        if(code == KeyEvent.VK_W){
+
+    public void playState(int code) {
+        if (code == KeyEvent.VK_W) {
             upPressed = true;
         }
-        if(code == KeyEvent.VK_S){
+        if (code == KeyEvent.VK_S) {
             downPressed = true;
         }
-        if(code == KeyEvent.VK_A){
+        if (code == KeyEvent.VK_A) {
             leftPressed = true;
         }
-        if(code == KeyEvent.VK_D){
+        if (code == KeyEvent.VK_D) {
             rightPressed = true;
         }
-        if(code == KeyEvent.VK_P){
+        if (code == KeyEvent.VK_P) {
             gp.gameState = gp.PauseState;
         }
-        if(code == KeyEvent.VK_C){
+        if (code == KeyEvent.VK_C) {
             gp.gameState = gp.charactersState;
         }
-        if(code == KeyEvent.VK_ENTER){
-            enterPressed =true;
+        if (code == KeyEvent.VK_ENTER) {
+            enterPressed = true;
         }
-        if(code == KeyEvent.VK_F){
+        if (code == KeyEvent.VK_F) {
             shotKeyPressed = true;
         }
-        if(code == KeyEvent.VK_ESCAPE){
+        if (code == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.optionlaState;
         }
 
         //Debug
-        if(code == KeyEvent.VK_T){
-            if(showDebagText == false){
+        if (code == KeyEvent.VK_T) {
+            if (showDebagText == false) {
                 showDebagText = true;
-            }
-            else if (showDebagText == true) {
+            } else if (showDebagText == true) {
                 showDebagText = false;
             }
         }
-        if(code == KeyEvent.VK_R) {
-            switch (gp.currentMap){
-                case 0:gp.titleManeger.loadMap("/Map/worldV2.txt",0);break;
-                case 1:gp.titleManeger.loadMap("/Map/interior01.txt",1);break;
+        if (code == KeyEvent.VK_R) {
+            switch (gp.currentMap) {
+                case 0:
+                    gp.titleManeger.loadMap("/Map/worldV2.txt", 0);
+                    break;
+                case 1:
+                    gp.titleManeger.loadMap("/Map/interior01.txt", 1);
+                    break;
             }
 
         }
     }
 
-    public  void  pauseState(int code){
-        if(code == KeyEvent.VK_P){
+    public void pauseState(int code) {
+        if (code == KeyEvent.VK_P) {
             gp.gameState = gp.PlayState;
         }
     }
-    public  void  dialogeState(int code){
-        if(code == KeyEvent.VK_ENTER){
+
+    public void dialogeState(int code) {
+        if (code == KeyEvent.VK_ENTER) {
             gp.gameState = gp.PlayState;
         }
     }
-    public  void  characterState(int code){
-        if(code == KeyEvent.VK_C){
-                gp.gameState = gp.PlayState;
+
+    public void characterState(int code) {
+        if (code == KeyEvent.VK_C) {
+            gp.gameState = gp.PlayState;
         }
-        if(code == KeyEvent.VK_W){
-            if(gp.ui.slotRow != 0) {
-                gp.ui.slotRow--;
-                gp.playSE(9);
-            }
-        }
-        if(code == KeyEvent.VK_A){
-            if(gp.ui.slotCol !=0) {
-                gp.ui.slotCol--;
-                gp.playSE(9);
-            }
-        }
-        if(code == KeyEvent.VK_S){
-            if(gp.ui.slotRow != 3) {
-                gp.ui.slotRow++;
-                gp.playSE(9);
-            }
-        }
-        if(code == KeyEvent.VK_D){
-            if(gp.ui.slotCol != 4) {
-                gp.ui.slotCol++;
-                gp.playSE(9);
-            }
-        }
-        if(code == KeyEvent.VK_ENTER){
+        if (code == KeyEvent.VK_ENTER) {
             gp.player.selectItem();
         }
+        playerInventory(code);
     }
-    public  void  optionsState(int code){
-        if(code == KeyEvent.VK_ESCAPE){
+
+    public void optionsState(int code) {
+        if (code == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.PlayState;
         }
 
-        if(code == KeyEvent.VK_ENTER ){
+        if (code == KeyEvent.VK_ENTER) {
             enterPressed = true;
         }
 
         int maxComanNum = 0;
-        switch (gp.ui.subState){
-            case 0:maxComanNum =  5;break;
-            case 3:maxComanNum =  1;break;
+        switch (gp.ui.subState) {
+            case 0:
+                maxComanNum = 5;
+                break;
+            case 3:
+                maxComanNum = 1;
+                break;
 
         }
 
-        if(code == KeyEvent.VK_W ){
+        if (code == KeyEvent.VK_W) {
             gp.ui.comandNum--;
             gp.playSE(9);
-            if(gp.ui.comandNum < 0 ){
-                gp.ui.comandNum =maxComanNum;
+            if (gp.ui.comandNum < 0) {
+                gp.ui.comandNum = maxComanNum;
             }
         }
 
-        if(code == KeyEvent.VK_S ){
+        if (code == KeyEvent.VK_S) {
             gp.ui.comandNum++;
             gp.playSE(9);
-            if(gp.ui.comandNum > maxComanNum){
-                gp.ui.comandNum =0;
+            if (gp.ui.comandNum > maxComanNum) {
+                gp.ui.comandNum = 0;
             }
         }
 
-        if(code == KeyEvent.VK_A ){
-            if(gp.ui.subState == 0){
-                if(gp.ui.comandNum == 1 && gp.music.volumScale > 0){
+        if (code == KeyEvent.VK_A) {
+            if (gp.ui.subState == 0) {
+                if (gp.ui.comandNum == 1 && gp.music.volumScale > 0) {
                     gp.music.volumScale--;
                     gp.music.checkVolum();
                     gp.playSE(9);
                 }
-                    if(gp.ui.comandNum == 2 && gp.se.volumScale > 0){
-                        gp.se.volumScale--;
-                        gp.playSE(9);
-                    }
+                if (gp.ui.comandNum == 2 && gp.se.volumScale > 0) {
+                    gp.se.volumScale--;
+                    gp.playSE(9);
+                }
             }
         }
 
-        if(code == KeyEvent.VK_D ){
-            if(gp.ui.subState == 0){
-                if(gp.ui.comandNum == 1 && gp.music.volumScale < 5){
+        if (code == KeyEvent.VK_D) {
+            if (gp.ui.subState == 0) {
+                if (gp.ui.comandNum == 1 && gp.music.volumScale < 5) {
                     gp.music.volumScale++;
                     gp.music.checkVolum();
                     gp.playSE(9);
                 }
-                if(gp.ui.comandNum == 2 && gp.se.volumScale < 5){
+                if (gp.ui.comandNum == 2 && gp.se.volumScale < 5) {
                     gp.se.volumScale++;
                     gp.playSE(9);
                 }
@@ -240,32 +231,123 @@ public class KeyHandler implements KeyListener {
         }
 
     }
-    public  void  gameOverState(int code){
 
-        if(code == KeyEvent.VK_W){
-            gp.ui.comandNum --;
-            if(gp.ui.comandNum < 0){
+    public void gameOverState(int code) {
+
+        if (code == KeyEvent.VK_W) {
+            gp.ui.comandNum--;
+            if (gp.ui.comandNum < 0) {
                 gp.ui.comandNum = 1;
             }
             gp.playSE(9);
         }
-        if(code == KeyEvent.VK_S){
-            gp.ui.comandNum ++;
-            if(gp.ui.comandNum > 1){
+        if (code == KeyEvent.VK_S) {
+            gp.ui.comandNum++;
+            if (gp.ui.comandNum > 1) {
                 gp.ui.comandNum = 0;
             }
             gp.playSE(9);
         }
-        if(code == KeyEvent.VK_ENTER){
-            if(gp.ui.comandNum == 0){
-                gp.gameState = gp.PlayState ;
+        if (code == KeyEvent.VK_ENTER) {
+            if (gp.ui.comandNum == 0) {
+                gp.gameState = gp.PlayState;
                 gp.retry();
                 gp.playMusic(0);
 
-            }
-            else  if(gp.ui.comandNum == 1){
+            } else if (gp.ui.comandNum == 1) {
                 gp.gameState = gp.tileSize;
                 gp.restart();
+            }
+        }
+    }
+
+    public void tradeState(int code) {
+
+        if (code == KeyEvent.VK_ENTER) {
+            enterPressed = true;
+        }
+        if (gp.ui.subState == 0) {
+            if (code == KeyEvent.VK_W) {
+                gp.ui.comandNum--;
+                if (gp.ui.comandNum < 0) {
+                    gp.ui.comandNum = 2;
+                }
+                gp.playSE(9);
+            }
+            if (code == KeyEvent.VK_S) {
+                gp.ui.comandNum++;
+                if (gp.ui.comandNum > 2) {
+                    gp.ui.comandNum = 0;
+                }
+                gp.playSE(9);
+            }
+        }
+        if(gp.ui.subState == 1){
+            npcInventory(code);
+            if(code == KeyEvent.VK_ESCAPE){
+                gp.ui.subState =0;
+            }
+        }
+        if(gp.ui.subState == 2){
+            playerInventory(code);
+            if(code == KeyEvent.VK_ESCAPE){
+                gp.ui.subState =0;
+            }
+        }
+    }
+
+
+    public  void  playerInventory(int code){
+
+        if(code == KeyEvent.VK_W){
+            if(gp.ui.playerSlotRow != 0) {
+                gp.ui.playerSlotRow--;
+                gp.playSE(9);
+            }
+        }
+        if(code == KeyEvent.VK_A){
+            if(gp.ui.playerSlocCol !=0) {
+                gp.ui.playerSlocCol--;
+                gp.playSE(9);
+            }
+        }
+        if(code == KeyEvent.VK_S){
+            if(gp.ui.playerSlotRow != 3) {
+                gp.ui.playerSlotRow++;
+                gp.playSE(9);
+            }
+        }
+        if(code == KeyEvent.VK_D){
+            if(gp.ui.playerSlocCol != 4) {
+                gp.ui.playerSlocCol++;
+                gp.playSE(9);
+            }
+        }
+    }
+    public  void  npcInventory(int code){
+
+        if(code == KeyEvent.VK_W){
+            if(gp.ui.npcSlotRow != 0) {
+                gp.ui.npcSlotRow--;
+                gp.playSE(9);
+            }
+        }
+        if(code == KeyEvent.VK_A){
+            if(gp.ui.npcSlotCol !=0) {
+                gp.ui.npcSlotCol--;
+                gp.playSE(9);
+            }
+        }
+        if(code == KeyEvent.VK_S){
+            if(gp.ui.npcSlotRow != 3) {
+                gp.ui.npcSlotRow++;
+                gp.playSE(9);
+            }
+        }
+        if(code == KeyEvent.VK_D){
+            if(gp.ui.npcSlotCol != 4) {
+                gp.ui.npcSlotCol++;
+                gp.playSE(9);
             }
         }
     }

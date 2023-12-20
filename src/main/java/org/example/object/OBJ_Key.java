@@ -13,6 +13,7 @@ public class OBJ_Key extends Entyti {
         name = "Key";
         down1 = setup("/objects/key",gp.tileSize,gp.tileSize);
         description = "["+name+"]\nIts opens the door.";
+        price = 100;
 
     }
 

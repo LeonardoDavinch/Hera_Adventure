@@ -1,4 +1,6 @@
 package org.example;
+import org.example.enty.Entyti;
+
 import  java.awt.*;
 
 
@@ -8,6 +10,7 @@ public class EventHandler {
 
     public  int previusEventX,previusEventY;
     public  boolean canTouchEvent = true;
+    public int tempMap,tempCol,tempRow;
 
     public  EventHandler(GamePanel gp){
         this.gp=gp;
@@ -57,6 +60,7 @@ public class EventHandler {
             else if (hit(0,23,12,"up") == true){healingPool(gp.dialogusState);}
             else if(hit(0,10,39,"any") == true){teleportMap(1,12,13);}
             else if(hit(1,12,13,"any") == true){teleportMap(0,10,39);}
+            else if(hit(1,12,9,"up") == true){speak(gp.npc[1][0]);}
         }
 
     }
@@ -90,11 +94,11 @@ public class EventHandler {
         return  hit;
     }
     public  void  teleportMap(int map ,int col,int row){
-            gp.currentMap = map;
-            gp.player.worldX = gp.tileSize * col;
-            gp.player.worldY = gp.tileSize * row;
-            previusEventX =gp.player.worldX;
-            previusEventY = gp.player.worldY;
+
+            gp.gameState = gp.transitionState;
+            tempMap = map;
+            tempCol = col;
+            tempRow = row;
             canTouchEvent = false;
             gp.playSE(13);
 
@@ -126,6 +130,14 @@ public class EventHandler {
             gp.player.life = gp.player.maxLife;
             gp.player.mana = gp.player.maxMana;
             gp.aSetter.setMonster();
+        }
+    }
+    public  void  speak(Entyti entyti){
+
+        if(gp.keyH.enterPressed == true){
+            gp.gameState = gp.dialogusState;
+            gp.player.attacCanceled = true;
+            entyti.speak();
         }
     }
 }

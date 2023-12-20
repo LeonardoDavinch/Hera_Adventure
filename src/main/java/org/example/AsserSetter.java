@@ -2,6 +2,7 @@ package org.example;
 
 
 import org.example.Monsters.MON_GreanSlime;
+import org.example.enty.NPC_Merchant;
 import org.example.enty.NPC_OldMan;
 import org.example.object.*;
 import org.example.object.Armor.OBJ_Shield_Blue;
@@ -29,6 +30,8 @@ public class AsserSetter {
     public  void  setNPC(){
         int mapNum = 0;
         int i =0;
+
+        //Map 0
         gp.npc[mapNum][i] = new NPC_OldMan(gp);
         gp.npc[mapNum][i].worldX = gp.tileSize * 21;
         gp.npc[mapNum][i].worldY = gp.tileSize * 21;
@@ -36,9 +39,11 @@ public class AsserSetter {
 
         //Map 1
         mapNum = 1;
-        gp.npc[mapNum][i] = new NPC_OldMan(gp);
+        i = 0;
+        gp.npc[mapNum][i] = new NPC_Merchant(gp);
         gp.npc[mapNum][i].worldX = gp.tileSize * 12;
         gp.npc[mapNum][i].worldY = gp.tileSize * 7;
+        i++;
     }
     public  void  setMonster(){
         int mapNum = 0;

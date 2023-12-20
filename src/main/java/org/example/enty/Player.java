@@ -20,8 +20,7 @@ public class Player extends  Entyti{
     public  final  int screenY;
     public  int standCounter = 0;
     public  boolean attacCanceled = false;
-    public ArrayList<Entyti> inventory = new ArrayList<>();
-    public final  int maxInventorySize = 20;
+
 
 
     public  Player(GamePanel gp, KeyHandler keyH){
@@ -40,9 +39,6 @@ public class Player extends  Entyti{
         solidArea.width = 32;
         solidArea.height = 32;
 
-        //attack area
-   /*     attacArea.width = 36;
-        attacArea.height = 36;*/
 
         setDefaultVale();
         getPlayerImage();
@@ -54,8 +50,9 @@ public class Player extends  Entyti{
 
         worldX = gp.tileSize * 23;
         worldY = gp.tileSize * 21;
-/*        worldX = gp.tileSize * 12;
-        worldY = gp.tileSize * 13;*/
+        worldX = gp.tileSize * 12;
+        worldY = gp.tileSize * 12;
+        gp.currentMap = 1; // map 1
 
 
         speed = 4;
@@ -72,7 +69,7 @@ public class Player extends  Entyti{
         dexsterity =1;
         exp = 0;
         nextLevelExp =5;
-        coin = 0;
+        coin = 25;
         currentWeapon = new OBJ_Sword_Normal(gp);
         currentShiled = new OBJ_Shield_Wood(gp);
         projectile = new OBJ_Fireball(gp);
@@ -431,7 +428,7 @@ public class Player extends  Entyti{
     }
     public  void  selectItem(){
 
-        int itemIndex = gp.ui.getItemIndexOnSlot();
+        int itemIndex = gp.ui.getItemIndexOnSlot(gp.ui.playerSlocCol,gp.ui.playerSlotRow);
 
         if(itemIndex < inventory.size()){
 

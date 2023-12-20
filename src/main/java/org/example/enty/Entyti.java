@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Entyti {
@@ -68,11 +69,14 @@ public class Entyti {
     public  Projectile projectile ;
 
     //Items atributes
+    public ArrayList<Entyti> inventory = new ArrayList<>();
+    public final  int maxInventorySize = 20;
     public  int value;
     public  int ataccValue;
     public  int defenseValue;
     public  String description = "";
     public  int useCost;
+    public  int price;
 
     //Type
     public  int type;// 0 player , 1 npc , 2 monster
@@ -194,7 +198,7 @@ public class Entyti {
         }
 
         spritCounter++;
-        if (spritCounter > 12) {
+        if (spritCounter > 24) {
             if (sprintNum == 1) {
                 sprintNum = 2;
             } else if (sprintNum == 2) {

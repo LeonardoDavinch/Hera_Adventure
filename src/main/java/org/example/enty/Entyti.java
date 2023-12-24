@@ -36,6 +36,7 @@ public class Entyti {
     public  boolean dyling = false;
     public  boolean hpBarOn = false;
     public  boolean onPath = false;
+    public  boolean knockBack = false;
 
 
     //Counter
@@ -45,13 +46,13 @@ public class Entyti {
     public  int dyingCounter = 0;
     public  int hpBarCounter = 0;
     public  int shotAvaliableCounter = 0;
-
-
+    public  int knockBackCounter = 0;
 
 
     //Character Atributs
     public  int speed;
     public  String name;
+    public  int defauldSpeed ;
     public  int maxLife;
     public  int life;
     public  int maxMana;
@@ -78,6 +79,7 @@ public class Entyti {
     public  String description = "";
     public  int useCost;
     public  int price;
+    public  int knockBackPower = 0;
 
     //Type
     public  int type;// 0 player , 1 npc , 2 monster
@@ -187,18 +189,45 @@ public class Entyti {
     }
     public  void  update(){
 
-        setAction();
-        checkColision();
+        if(knockBack == true){
+            checkColision();
 
-        //if colision is false. plater can move
-        if(collisionOn == false){
-            switch (directory ){
-                case "up": worldY -= speed;break;
-                case "down": worldY += speed;break;
-                case "left": worldX -= speed;break;
-                case "right": worldX += speed;break;
+            if(collisionOn == true){
+                knockBackCounter = 0;
+                knockBack = false;
+                speed = defauldSpeed;
+            } else if (collisionOn == false) {
+                switch (gp.player.directory){
+                    case "up": worldY -= speed;break;
+                    case "down": worldY += speed;break;
+                    case "left": worldX -= speed;break;
+                    case "right": worldX += speed;break;
+                }
+            }
+            knockBackCounter++;
+            if(knockBackCounter == 10){
+                knockBackCounter = 0;
+                knockBack = false;
+                speed =defauldSpeed;
+            }
+
+        }
+        else {
+            setAction();
+            checkColision();
+
+            //if colision is false. plater can move
+            if(collisionOn == false){
+                switch (directory ){
+                    case "up": worldY -= speed;break;
+                    case "down": worldY += speed;break;
+                    case "left": worldX -= speed;break;
+                    case "right": worldX += speed;break;
+                }
             }
         }
+
+
 
         spritCounter++;
         if (spritCounter > 24) {
@@ -398,12 +427,6 @@ public class Entyti {
                         directory = "right";
                     }
                 }
-       /*         int nextCol = gp.pFinder.pathList.get(0).col;
-                int nextRow = gp.pFinder.pathList.get(0).row;
-
-                if (nextCol == goalCol && nextRow == goalRow) {
-                    onPath = false;
-                }*/
         }
     }
 }

@@ -16,5 +16,6 @@ public class OBJ_Axe extends Entyti {
         attacArea.height = 30;
         description = "[Woodcutter's Axe]\nA bit rusty but still\ncan cut some trees";
         price  = 75;
+        knockBackPower = 10;
     }
 }

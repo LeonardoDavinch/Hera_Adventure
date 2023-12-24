@@ -60,7 +60,9 @@ public class GamePanel extends JPanel implements  Runnable{
     public Entyti npc[][] = new Entyti[maxMap][10];
     public  Entyti monster[][] = new Entyti[maxMap][20];
     public InteractiveTille iTile[][] = new InteractiveTille[maxMap][50];
-    public ArrayList<Entyti> projectList = new ArrayList<>();
+    public  Entyti projectile[][] = new Entyti[maxMap][20];
+
+    /*public ArrayList<Entyti> projectList = new ArrayList<>();*/
     public  ArrayList<Entyti> particleList = new ArrayList<>();
     public ArrayList<Entyti> entytiList = new ArrayList<>();
 
@@ -197,13 +199,13 @@ public class GamePanel extends JPanel implements  Runnable{
 
                 }
             }
-            for (int i = 0; i <projectList.size() ; i++) {
-                if( projectList.get(i) != null){
-                    if(projectList.get(i).alive == true ){
-                        projectList.get(i).update();
+            for (int i = 0; i <projectile[1].length ; i++) {
+                if(projectile[currentMap][i] != null){
+                    if(projectile[currentMap][i].alive == true ){
+                        projectile[currentMap][i].update();
                     }
-                    if(projectList.get(i).alive == false){
-                        projectList.remove(i);
+                    if(projectile[currentMap][i].alive == false){
+                        projectile[currentMap][i] = null;
                     }
                 }
             }
@@ -274,9 +276,9 @@ public class GamePanel extends JPanel implements  Runnable{
                     entytiList.add(monster[currentMap][i]);
                 }
             }
-            for (int i = 0; i <projectList.size() ; i++) {
-                if(projectList.get(i) != null){
-                    entytiList.add(projectList.get(i));
+            for (int i = 0; i <projectile[1].length ; i++) {
+                if(projectile[currentMap][i]!= null){
+                    entytiList.add(projectile[currentMap][i]);
                 }
             }
             for (int i = 0; i < particleList.size() ; i++) {

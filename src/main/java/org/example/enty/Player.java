@@ -50,10 +50,8 @@ public class Player extends  Entyti{
 
         worldX = gp.tileSize * 23;
         worldY = gp.tileSize * 21;
-        gp.currentMap = 0; // map 1 trade location
-
-
-        speed = 4;
+        defauldSpeed = 4;
+        speed = defauldSpeed;
         directory = "down";
 
         //player status
@@ -215,7 +213,15 @@ public class Player extends  Entyti{
 
             projectile.subtracktResourse(this);
 
-            gp.projectList.add(projectile);
+           /* gp.projectList.add(projectile);*/
+
+           //check vacancy
+           for (int i = 0; i < gp.projectile[1].length; i++) {
+               if(gp.projectile[gp.currentMap][i] == null){
+                   gp.projectile[gp.currentMap][i] = projectile;
+                   break;
+               }
+           }
 
            shotAvaliableCounter = 0;
 
@@ -251,7 +257,7 @@ public class Player extends  Entyti{
         if(spritCounter <= 5){
             sprintNum =1;
         }
-        if(spritCounter > 5 && sprintNum <=25){
+        if(spritCounter > 5 && spritCounter <=25){
             sprintNum = 2;
 
             int currentWorldX = worldX;
@@ -270,10 +276,13 @@ public class Player extends  Entyti{
 
             //check monster colision
             int monsterIndex = gp.oChecker.checkEntity(this,gp.monster);
-            damageMonster(monsterIndex,attack);
+            damageMonster(monsterIndex,attack,currentWeapon.knockBackPower);
 
             int iTileIndex = gp.oChecker.checkEntity(this,gp.iTile);
             damageInteractiveTille(iTileIndex);
+
+            int projectileIndex = gp.oChecker.checkEntity(this,gp.projectile);
+            damageProjectile(projectileIndex);
 
             worldX = currentWorldX;
             worldY = currentWorldY;
@@ -325,8 +334,6 @@ public class Player extends  Entyti{
                     gp.npc[gp.currentMap][i].speak();
             }
         }
-
-
     }
     public  void  contactMonster(int i){
 
@@ -344,11 +351,15 @@ public class Player extends  Entyti{
             }
         }
     }
-    public  void  damageMonster(int i ,int attack){
+    public  void  damageMonster(int i ,int attack,int knockBackPower){
         if( i != 999) {
             if (gp.monster[gp.currentMap][i].invicible == false) {
 
                 gp.playSE(5);
+                if(knockBackPower > 0){
+                    knockBack(gp.monster[gp.currentMap][i],knockBackPower);
+                }
+
 
                 int damage = attack - gp.monster[gp.currentMap][i].defense;
                 if (damage < 0) {
@@ -387,6 +398,12 @@ public class Player extends  Entyti{
                 respawnDelay
         );
     }
+    public  void  knockBack (Entyti entyti,int knockBackPower){
+        entyti.directory = directory;
+        entyti.speed += knockBackPower;
+        entyti.knockBack = true;
+
+    }
 
     public  void  damageInteractiveTille(int i){
 
@@ -404,6 +421,14 @@ public class Player extends  Entyti{
             if(gp.iTile[gp.currentMap][i].life == 0 ) {
                 gp.iTile[gp.currentMap][i] = gp.iTile[gp.currentMap][i].getDestroyedFrom();
             }
+        }
+    }
+    public  void  damageProjectile(int i ){
+
+        if(i != 999){
+            Entyti projectile = gp.projectile[gp.currentMap][i];
+            projectile.alive = false;
+            generateParticle(projectile,projectile);
         }
     }
     public  void  checkLevelUp(){

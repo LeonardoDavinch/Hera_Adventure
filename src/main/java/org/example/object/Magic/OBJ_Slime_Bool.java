@@ -16,7 +16,7 @@ public class OBJ_Slime_Bool extends Projectile {
         this.gp = gp;
 
         name = "Slime Bool";
-        speed = 8;
+        speed = 4;
         maxLife = 80;
         life = maxLife;
         attack = 2;

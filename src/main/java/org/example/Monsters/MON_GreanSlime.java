@@ -17,7 +17,8 @@ public class MON_GreanSlime extends Entyti {
 
         type = type_monsters;
         name = "Grean Slime";
-        speed = 1;
+        defauldSpeed = 1;
+        speed = defauldSpeed;
         maxLife = 4;
         life = maxLife;
         attack = 5;
@@ -76,10 +77,19 @@ public class MON_GreanSlime extends Entyti {
             searchPath(goalCol,goalRow);
 
             int i = new Random().nextInt(100) + 1;
-            if (i > 60 && projectile.alive == false && shotAvaliableCounter == 30) {
+            if (i > 80 && projectile.alive == false && shotAvaliableCounter == 30) {
 
                 projectile.set(worldX, worldY, directory, true, this);
-                gp.projectList.add(projectile);
+                /*gp.projectList.add(projectile);*/
+
+             /*   //check Vacancy
+                for (int j = 0; j < gp.projectile[1].length; j++) {
+                    if(gp.projectile[gp.currentMap][j] == null){
+                        gp.projectile[gp.currentMap][j] = projectile;
+                        break;
+                    }
+                }*/
+
                 shotAvaliableCounter = 0;
             }
         }

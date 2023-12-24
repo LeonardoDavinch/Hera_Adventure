@@ -57,7 +57,6 @@ public class OBJ_Slime_Bool extends Projectile {
                     gp.player.speed = 4;
             }
         }, 5000);
-
         return  color;
     }
     public  int getParticleSize(){

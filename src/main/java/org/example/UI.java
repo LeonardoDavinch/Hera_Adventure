@@ -912,7 +912,7 @@ public class UI {
                     currentdialogue = "You nead more coin to buy that!";
                     drawDialogeScreen();
                 }
-                if(gp.player.inventory.size() == gp.player.maxInventorySize){
+                else if(gp.player.inventory.size() == gp.player.maxInventorySize){
                     subState = 0;
                     gp.gameState = gp.dialogusState;
                     currentdialogue = "You cannot carry any more!";

@@ -87,7 +87,7 @@ public class CollisionChecker {
                 }
                     if(entyti.solidArea.intersects(gp.obj[gp.currentMap][i].solidArea)){
                         if(gp.obj[gp.currentMap][i].collision == true) {
-                            entyti.collision = true;
+                            entyti.collisionOn = true;
                         }
                             if(player == true){
                                 indx =i;
@@ -121,6 +121,7 @@ public class CollisionChecker {
                     case "left": entyty.solidArea.x -= entyty.speed; break;
                     case "right": entyty.solidArea.x += entyty.speed; break;
                 }
+
 
                 if(entyty.solidArea.intersects(target[gp.currentMap][i].solidArea)){
                     if(target[gp.currentMap][i] != entyty){

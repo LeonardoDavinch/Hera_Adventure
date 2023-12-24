@@ -35,6 +35,25 @@ public class MON_GreanSlime extends Entyti {
         getImage();
 
     }
+    public  void  update(){
+
+        super.update();
+
+        int xDistance = Math.abs(worldX - gp.player.worldX);
+        int yDistance = Math.abs(worldY - gp.player.worldY);
+        int tileDistance =(xDistance + yDistance)/gp.tileSize;
+
+        if(onPath == false && tileDistance < 5){
+
+            int i = new Random().nextInt(100)+1;
+            if(i > 50){
+                onPath = true;
+            }
+        }
+   /*     if(onPath == true && tileDistance > 20){
+            onPath = true;
+        }*/
+    }
     public  void  getImage(){
 
         up1 = setup("/monster/greenslime_down_1",gp.tileSize,gp.tileSize);
@@ -49,38 +68,49 @@ public class MON_GreanSlime extends Entyti {
 
     }
     public  void  setAction(){
-        actionLoockCounter++;
+        if(onPath == true){
 
-        if (actionLoockCounter == 120) {
+            int goalCol =(gp.player.worldX + gp.player.solidArea.x)/gp.tileSize;
+            int goalRow =(gp.player.worldY + gp.player.solidArea.y)/gp.tileSize;
 
-            Random random = new Random();
-            int i = random.nextInt(100) + 1;
+            searchPath(goalCol,goalRow);
 
-            if (i <= 25) {
-                directory = "up";
-            }  if (i > 25 && i <= 50) {
-                directory = "down";
-            }  if (i > 50 && i <= 75) {
-                directory = "left";
-            }  if (i > 75 && i <= 100) {
-                directory = "right";
+            int i = new Random().nextInt(100) + 1;
+            if (i > 60 && projectile.alive == false && shotAvaliableCounter == 30) {
+
+                projectile.set(worldX, worldY, directory, true, this);
+                gp.projectList.add(projectile);
+                shotAvaliableCounter = 0;
             }
+        }
+        else{
+            actionLoockCounter++;
 
-            actionLoockCounter = 0;
+            if (actionLoockCounter == 120) {
+                Random random = new Random();
+                int i = random.nextInt(100) + 1;
 
+                if (i <= 25) {
+                    directory = "up";
+                }
+                if (i > 25 && i <= 50) {
+                    directory = "down";
+                }
+                if (i > 50 && i <= 75) {
+                    directory = "left";
+                }
+                if (i > 75 && i <= 100) {
+                    directory = "right";
+                }
+                actionLoockCounter = 0;
+            }
         }
 
-        int i = new Random().nextInt(100) + 1;
-        if (i > 99 && projectile.alive == false && shotAvaliableCounter == 30) {
-
-            projectile.set(worldX, worldY, directory, true, this);
-            gp.projectList.add(projectile);
-            shotAvaliableCounter = 0;
-        }
     }
     public  void  damageReaction(){
         actionLoockCounter = 0;
-        directory = gp.player.directory;
+        //directory = gp.player.directory;
+        onPath = true;
     }
     public  void  checkDrop(){
         int i = new Random().nextInt(100) + 1 ;

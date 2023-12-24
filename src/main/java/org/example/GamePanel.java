@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.ai.PathFinder;
 import org.example.enty.Entyti;
 import org.example.enty.Player;
 import org.example.tille_interactive.InteractiveTille;
@@ -41,13 +42,14 @@ public class GamePanel extends JPanel implements  Runnable{
     int FPS =60;
 
     //System
-    TitleManeger titleManeger=new TitleManeger(this);
+    public TitleManeger titleManeger=new TitleManeger(this);
     public KeyHandler keyH = new KeyHandler(this);
     public  Sound music =new Sound();
     public  Sound se =new Sound();
     public  UI ui =new UI(this);
     public EventHandler eHandler = new EventHandler(this);
     Config config =new Config(this);
+    public PathFinder pFinder = new PathFinder(this);
     Thread  gameThread;
     public  CollisionChecker oChecker = new CollisionChecker(this);
     public  AsserSetter aSetter = new AsserSetter(this);

@@ -17,6 +17,7 @@ public class OBJ_Potion_Red extends Entyti {
         down1 = setup("/objects/potion_red",gp.tileSize,gp.tileSize);
         description = "[Red potion]\nHeals your life by"+value+".";
         price = 25;
+        stackbale = true;
     }
     public  boolean  use(Entyti entyti){
         gp.gameState = gp.dialogusState;

@@ -9,7 +9,6 @@ import org.example.object.OBJ_Key;
 import org.example.object.OBJ_Potion_Red;
 
 import java.awt.*;
-import java.util.Random;
 
 public class NPC_Merchant extends  Entyti {
 

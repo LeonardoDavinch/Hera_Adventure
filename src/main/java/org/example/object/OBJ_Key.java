@@ -18,6 +18,8 @@ public class OBJ_Key extends Entyti {
         down1 = setup("/objects/key",gp.tileSize,gp.tileSize);
         description = "["+name+"]\nIts opens the door.";
         price = 100;
+        stackbale = true;
+
     }
     public  boolean  use(Entyti entyti){
 

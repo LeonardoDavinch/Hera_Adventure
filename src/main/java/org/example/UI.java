@@ -34,8 +34,6 @@ public class UI {
     public  Entyti npc;
 
 
-
-
     public UI(GamePanel gp){
         this.gp=gp;
 
@@ -69,7 +67,6 @@ public class UI {
         message.add(text);
         messageCounter.add(0);
     }
-
 
     public  void  draw(Graphics2D g2){
         this.g2 = g2;
@@ -172,6 +169,7 @@ public class UI {
         }
 
     }
+
     public  void  drawMesage(){
 
         int mesageX = gp.tileSize;
@@ -486,6 +484,25 @@ public class UI {
             }
 
             g2.drawImage(entyti.inventory.get(i).down1,slotX,slotY,null);
+
+            //Display amout
+            if(entyti == gp.player && entyti.inventory.get(i).amout > 1){
+
+                g2.setFont(g2.getFont().deriveFont(32f));
+                int amoutX;
+                int amoutY;
+
+                String s = ""+entyti.inventory.get(i).amout;
+                amoutX = getXforAlignToRightText(s,slotX+44);
+                amoutY = slotY + gp.tileSize;
+
+                //Shadow
+                g2.setColor(new Color(60,60,60));
+                g2.drawString(s,amoutX,amoutY);
+                //Number
+                g2.setColor(Color.white);
+                g2.drawString(s,amoutX - 3,amoutY - 3);
+            }
 
             slotX +=slotSize    ;
 
@@ -912,15 +929,15 @@ public class UI {
                     currentdialogue = "You nead more coin to buy that!";
                     drawDialogeScreen();
                 }
-                else if(gp.player.inventory.size() == gp.player.maxInventorySize){
-                    subState = 0;
-                    gp.gameState = gp.dialogusState;
-                    currentdialogue = "You cannot carry any more!";
-                }
                 else {
-                    gp.player.coin -= npc.inventory.get(itemIndex).price;
-                     gp.player.inventory.add(npc.inventory.get(itemIndex));
-
+                    if(gp.player.canObtainItem(npc.inventory.get(itemIndex)) == true){
+                        gp.player.coin -= npc.inventory.get(itemIndex).price;
+                    }
+                    else {
+                        subState = 0;
+                        gp.gameState = gp.dialogusState;
+                        currentdialogue = "You cannot carry any more!";
+                    }
                 }
             }
         }
@@ -979,7 +996,12 @@ public class UI {
 
                 }
                 else {
-                    gp.player.inventory.remove(itemIndex);
+                    if(gp.player.inventory.get(itemIndex).amout > 1){
+                        gp.player.inventory.get(itemIndex).amout--;
+                    }
+                    else {
+                        gp.player.inventory.remove(itemIndex);
+                    }
                     gp.player.coin +=price;
                 }
 
@@ -988,8 +1010,6 @@ public class UI {
 
 
     }
-
-
     public  int getItemIndexOnSlot(int slocCol,int slotRow){
         int itemIndex = slocCol + (slotRow * 5);
         return  itemIndex;

@@ -5,11 +5,9 @@ import org.example.Monsters.MON_GreanSlime;
 import org.example.enty.NPC_Merchant;
 import org.example.enty.NPC_OldMan;
 import org.example.object.*;
-import org.example.object.Armor.OBJ_Shield_Blue;
-import org.example.object.Currency.OBJ_Coin_Bronze;
+import org.example.object.OBJ_Chest;
+import org.example.object.OBJ_Key;
 import org.example.tille_interactive.IT_DryTree;
-
-import java.util.Random;
 
 public class AsserSetter {
     GamePanel gp;
@@ -40,6 +38,18 @@ public class AsserSetter {
         gp.obj[mapNum][i] = new OBJ_Chest(gp,new OBJ_Key(gp));
         gp.obj[mapNum][i].worldX = gp.tileSize * 30;
         gp.obj[mapNum][i].worldY = gp.tileSize * 29;
+        i++;
+        gp.obj[mapNum][i] = new OBJ_Potion_Red(gp);
+        gp.obj[mapNum][i].worldX = gp.tileSize * 21;
+        gp.obj[mapNum][i].worldY = gp.tileSize * 20;
+        i++;
+        gp.obj[mapNum][i] = new OBJ_Potion_Red(gp);
+        gp.obj[mapNum][i].worldX = gp.tileSize * 20;
+        gp.obj[mapNum][i].worldY = gp.tileSize * 20;
+        i++;
+        gp.obj[mapNum][i] = new OBJ_Potion_Red(gp);
+        gp.obj[mapNum][i].worldX = gp.tileSize * 17;
+        gp.obj[mapNum][i].worldY = gp.tileSize * 21;
         i++;
 
     }

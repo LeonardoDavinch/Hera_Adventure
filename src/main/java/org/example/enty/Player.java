@@ -1,6 +1,5 @@
 package org.example.enty;
 
-import org.example.AsserSetter;
 import org.example.GamePanel;
 import org.example.KeyHandler;
 import org.example.Monsters.MON_GreanSlime;
@@ -8,11 +7,10 @@ import org.example.object.Magic.OBJ_Fireball;
 import org.example.object.OBJ_Key;
 import org.example.object.Armor.OBJ_Shield_Wood;
 import org.example.object.Armor.OBJ_Sword_Normal;
+import org.example.object.OBJ_Potion_Red;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Timer;
 
 public class Player extends  Entyti{
     KeyHandler keyH;
@@ -20,8 +18,6 @@ public class Player extends  Entyti{
     public  final  int screenY;
     public  int standCounter = 0;
     public  boolean attacCanceled = false;
-
-
 
     public  Player(GamePanel gp, KeyHandler keyH){
         super(gp);
@@ -65,7 +61,7 @@ public class Player extends  Entyti{
         dexsterity =1;
         exp = 0;
         nextLevelExp =5;
-        coin = 25;
+        coin = 5000;
         currentWeapon = new OBJ_Sword_Normal(gp);
         currentShiled = new OBJ_Shield_Wood(gp);
         projectile = new OBJ_Fireball(gp);
@@ -90,6 +86,8 @@ public class Player extends  Entyti{
         inventory.add(currentWeapon);
         inventory.add(currentShiled);
         inventory.add(new OBJ_Key(gp));
+        inventory.add(new OBJ_Potion_Red(gp));
+
 
     }
     public  int  getAttack(){
@@ -316,9 +314,7 @@ public class Player extends  Entyti{
                 //inventory items
             else {
                     String  text ;
-                    if(inventory.size() != maxInventorySize){
-
-                        inventory.add(gp.obj[gp.currentMap][i]);
+                    if(canObtainItem(gp.obj[gp.currentMap][i]) == true){
                         gp.playSE(1);
                         text = "Got a "+ gp.obj[gp.currentMap][i].name+"!";
 
@@ -478,11 +474,55 @@ public class Player extends  Entyti{
             if(selectItem.type == type_consumable){
 
                 if(selectItem.use(this) == true){
-                    inventory.remove(itemIndex);
+                    if(selectItem.amout>1){
+                        selectItem.amout --;
+                    }
+                   else {
+                        inventory.remove(itemIndex);
+                    }
                 }
-
             }
         }
+    }
+    public  int searchItemInInventory(String itemName) {
+
+        int itemIndex = 999 ;
+
+        for (int i = 0; i < inventory.size(); i++) {
+            if(inventory.get(i).name.equals(itemName)){
+                itemIndex = i;
+                break;
+            }
+        }
+        return  itemIndex;
+
+    }
+    public  boolean canObtainItem (Entyti item){
+
+        boolean canObtain  = false;
+
+        //check if stakeble
+        if(item.stackbale == true){
+            int index = searchItemInInventory(item.name);
+
+            if(index != 999){
+                inventory.get(index).amout++;
+                canObtain = true;
+            }
+            else {
+                if(item.inventory.size() != maxInventorySize){
+                    inventory.add(item);
+                    canObtain = true;
+                }
+            }
+        }
+        else {
+            if(item.inventory.size() != maxInventorySize){
+                inventory.add(item);
+                canObtain = true;
+            }
+        }
+        return  canObtain;
     }
     public  void  draw(Graphics2D g2){
 

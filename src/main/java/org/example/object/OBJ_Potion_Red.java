@@ -18,12 +18,12 @@ public class OBJ_Potion_Red extends Entyti {
         description = "[Red potion]\nHeals your life by"+value+".";
         price = 25;
     }
-    public  void  use(Entyti entyti){
+    public  boolean  use(Entyti entyti){
         gp.gameState = gp.dialogusState;
         gp.ui.currentdialogue ="You drink the"+name+"!\n"
                 +"Your life has been recovered by "+value+".";
         entyti.life +=value;
         gp.playSE(2);
-
+        return  true;
     }
 }

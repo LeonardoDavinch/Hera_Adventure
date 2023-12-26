@@ -77,7 +77,7 @@ public class MON_GreanSlime extends Entyti {
             searchPath(goalCol,goalRow);
 
             int i = new Random().nextInt(100) + 1;
-            if (i > 80 && projectile.alive == false && shotAvaliableCounter == 30) {
+            if (i > 167 && projectile.alive == false && shotAvaliableCounter == 30) {
 
                 projectile.set(worldX, worldY, directory, true, this);
                 /*gp.projectList.add(projectile);*/

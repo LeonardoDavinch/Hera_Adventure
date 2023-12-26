@@ -14,11 +14,11 @@ public class OBJ_Coin_Bronze extends Entyti {
         value = 1;
         down1 = setup("/objects/coin_bronze",gp.tileSize,gp.tileSize);
     }
-    public  void  use(Entyti entyti){
+    public  boolean  use(Entyti entyti){
 
         gp.playSE(1);
         gp.ui.addMesage("Coin "+value);
         gp.player.coin += value;
-
+        return true;
     }
 }

@@ -20,11 +20,11 @@ public class OBJ_Heart extends Entyti {
         image2 = setup("/objects/heart_half",gp.tileSize,gp.tileSize);
         image3 = setup("/objects/heart_blank",gp.tileSize,gp.tileSize);
     }
-    public  void  use(Entyti entyti){
+    public  boolean  use(Entyti entyti){
 
         gp.playSE(2);
         gp.ui.addMesage("Life "+ value);
         entyti.life += value;
-
+        return  true;
     }
 }

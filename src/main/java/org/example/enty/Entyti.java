@@ -83,7 +83,6 @@ public class Entyti {
 
     //Type
     public  int type;// 0 player , 1 npc , 2 monster
-
     public  final  int type_player = 0;
     public  final  int  type_nps = 1;
     public  final  int type_monsters = 2;
@@ -92,13 +91,31 @@ public class Entyti {
     public  final  int type_shield = 5;
     public  final  int type_consumable = 6;
     public  final  int type_pickupOnly = 7;
+    public  final  int type_obstacle = 8;
 
 
 
     public  Entyti (GamePanel gp){
         this.gp=gp;
     }
-
+    public  int getLeftX(){
+        return  worldX + solidArea.x;
+    }
+    public  int getRightX(){
+        return  worldX + solidArea.x+ solidArea.width;
+    }
+    public  int getTopY(){
+        return  worldY + solidArea.y;
+    }
+    public  int getBottomY(){
+        return worldY + solidArea.y + solidArea.height;
+    }
+    public  int getCool(){
+        return  (worldX + solidArea.x) / gp.tileSize;
+    }
+    public  int getRow(){
+        return (worldY + solidArea.y) / gp.tileSize;
+    }
    public  void  setAction(){
     }
 
@@ -128,7 +145,10 @@ public class Entyti {
         }
 
     }
-    public void  use(Entyti entyti ){}
+    public boolean  use(Entyti entyti ){
+        return  false;
+
+    }
     public  void  checkDrop (){}
     public  void  dropItem(Entyti dropedItem){
         for (int i = 0; i < gp.obj[1].length ; i++) {
@@ -185,6 +205,9 @@ public class Entyti {
         if(this.type == type_monsters && contactPlayer == true){
             damagePlayer(attack);
         }
+
+    }
+    public  void  interact(){
 
     }
     public  void  update(){
@@ -428,5 +451,33 @@ public class Entyti {
                     }
                 }
         }
+    }
+    public  int  getDetected(Entyti user,Entyti target[][],String targetName){
+
+        int index = 999;
+
+        int nextWorldX = user.getLeftX();
+        int nextWorldY = user.getTopY();
+
+        switch (user.directory){
+            case "up":nextWorldY = user.getTopY()-1;break;
+            case "down":nextWorldY = user.getBottomY()+1;break;
+            case "left":nextWorldX = user.getLeftX()-1;break;
+            case "right":nextWorldX = user.getRightX()+1;break;
+        }
+        int col = nextWorldX / gp.tileSize;
+        int row = nextWorldY / gp.tileSize;
+
+        for (int i = 0; i < target[1].length; i++) {
+            if(target[gp.currentMap][i] != null){
+                if(target[gp.currentMap][i].getCool() == col && target[gp.currentMap][i].getRow() == row
+                && target[gp.currentMap][i].name.equals(targetName)){
+                    index = i;
+                    break;
+                }
+            }
+        }
+        return index;
+
     }
 }

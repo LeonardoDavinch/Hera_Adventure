@@ -305,8 +305,15 @@ public class Player extends  Entyti{
                 gp.obj[gp.currentMap][i] = null;
 
                 }
+                //Obstacle
+                else if (gp.obj[gp.currentMap][i].type == type_obstacle) {
+                    if(keyH.enterPressed == true){
+                        attacCanceled = true;
+                        gp.obj[gp.currentMap][i].interact();
+                    }
+                }
 
-            //inventory items
+                //inventory items
             else {
                     String  text ;
                     if(inventory.size() != maxInventorySize){
@@ -469,8 +476,11 @@ public class Player extends  Entyti{
                 defense = getDefense();
             }
             if(selectItem.type == type_consumable){
-                selectItem.use(this);
-                inventory.remove(itemIndex);
+
+                if(selectItem.use(this) == true){
+                    inventory.remove(itemIndex);
+                }
+
             }
         }
     }

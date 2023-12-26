@@ -3,6 +3,7 @@ package org.example;
 import org.example.ai.PathFinder;
 import org.example.enty.Entyti;
 import org.example.enty.Player;
+import org.example.enviroment.EnviromentManager;
 import org.example.tille_interactive.InteractiveTille;
 import org.example.title.TitleManeger;
 
@@ -23,7 +24,7 @@ public class GamePanel extends JPanel implements  Runnable{
      public final int tileSize=originalTitleSize * scale;// 48x48 title
      public final  int maxScreenCol =20;
      public final  int maxScreenRow =12;
-     public final  int screenWidh =tileSize * maxScreenCol; // 768 pixel
+     public final  int screenWidh =tileSize * maxScreenCol; // 960 pixel
      public final  int screenHeight =tileSize * maxScreenRow;// 576 pixel
     //World setting
     public  final  int maxWorldCol = 50;
@@ -50,6 +51,7 @@ public class GamePanel extends JPanel implements  Runnable{
     public EventHandler eHandler = new EventHandler(this);
     Config config =new Config(this);
     public PathFinder pFinder = new PathFinder(this);
+    EnviromentManager eMeneger = new EnviromentManager(this);
     Thread  gameThread;
     public  CollisionChecker oChecker = new CollisionChecker(this);
     public  AsserSetter aSetter = new AsserSetter(this);
@@ -99,6 +101,8 @@ public class GamePanel extends JPanel implements  Runnable{
        aSetter.setNPC();
        aSetter.setMonster();
        aSetter.setInteractiveTile();
+       eMeneger.setup();
+
        gameState = titelState;
 
         tempScreen = new BufferedImage(screenWidh, screenHeight, BufferedImage.TYPE_INT_ARGB);
@@ -304,6 +308,8 @@ public class GamePanel extends JPanel implements  Runnable{
             //Empty list
             entytiList.clear();
 
+            //Enviroment
+            eMeneger.draw(g2);
             //Ui
             ui.draw(g2);
         }

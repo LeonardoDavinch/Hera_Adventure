@@ -319,7 +319,6 @@ public class Entyti {
                     if(sprintNum == 2){image =right2;}
                     break;
             }
-
             //Monster hp bar
             if(type == 2 && hpBarOn == true){
                 double onScale = (double)gp.tileSize/maxLife;

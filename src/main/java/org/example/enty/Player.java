@@ -45,8 +45,8 @@ public class Player extends  Entyti{
 
     public  void  setDefaultVale(){
 
-        worldX = gp.tileSize * 23;
-        worldY = gp.tileSize * 21;
+        worldX = gp.tileSize * 10;
+        worldY = gp.tileSize * 8;
         defauldSpeed = 4;
         speed = defauldSpeed;
         directory = "down";
@@ -109,6 +109,16 @@ public class Player extends  Entyti{
         right1 =setup("/player/Walking sprites/boy_right_1",gp.tileSize,gp.tileSize);
         right2 =setup("/player/Walking sprites/boy_right_2",gp.tileSize,gp.tileSize);
 
+    }
+    public  void  getSleepingImage(BufferedImage image){
+        up1  = image;
+        up2  = image;
+        down1 = image;
+        down2 = image;
+        left1 = image;
+        left2 = image;
+        right1= image;
+        right2= image;
     }
     public  void  getPlayerAttac(){
 

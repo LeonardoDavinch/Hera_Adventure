@@ -134,7 +134,7 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_R) {
             switch (gp.currentMap) {
                 case 0:
-                    gp.titleManeger.loadMap("/Map/worldV2.txt", 0);
+                    gp.titleManeger.loadMap("/maps/Test1.txt", 0);
                     break;
                 case 1:
                     gp.titleManeger.loadMap("/Map/interior01.txt", 1);

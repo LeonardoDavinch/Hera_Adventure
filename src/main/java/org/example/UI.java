@@ -114,6 +114,10 @@ public class UI {
         if(gp.gameState == gp.tradeState){
             drawTradeScreen();
         }
+        //Sleep state
+        if(gp.gameState == gp.sleepState){
+            drawSleepScreen();
+        }
 
 
     }
@@ -881,6 +885,29 @@ public class UI {
                 subState = 0;
                 gp.gameState = gp.dialogusState;
                 currentdialogue = "Come again, hehe!";
+            }
+        }
+
+    }
+    public  void  drawSleepScreen(){
+        counter++;
+
+        if(counter < 120 ){
+            gp.eMeneger.lighting.filterAlpha += 0.01f;
+            if(gp.eMeneger.lighting.filterAlpha > 1f){
+                gp.eMeneger.lighting.filterAlpha = 1f;
+            }
+        }
+        if(counter >= 120){
+            gp.eMeneger.lighting.filterAlpha -= 0.01f;
+            if(gp.eMeneger.lighting.filterAlpha <= 0) {
+                gp.eMeneger.lighting.filterAlpha = 0f;
+                counter = 0;
+                gp.eMeneger.lighting.dayState = gp.eMeneger.lighting.day;
+                gp.eMeneger.lighting.dayCounter = 0;
+                gp.gameState = gp.PlayState;
+                gp.player.getPlayerImage();
+
             }
         }
 

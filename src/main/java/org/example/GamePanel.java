@@ -27,8 +27,8 @@ public class GamePanel extends JPanel implements  Runnable{
      public final  int screenWidh =tileSize * maxScreenCol; // 960 pixel
      public final  int screenHeight =tileSize * maxScreenRow;// 576 pixel
     //World setting
-    public  final  int maxWorldCol = 50;
-    public  final  int maxWorldRow =50;
+    public    int maxWorldCol ;
+    public    int maxWorldRow ;
     public  final  int maxMap  = 10;
     public   int currentMap  = 0;
     //for full screan
@@ -64,7 +64,7 @@ public class GamePanel extends JPanel implements  Runnable{
     public InteractiveTille iTile[][] = new InteractiveTille[maxMap][50];
     public  Entyti projectile[][] = new Entyti[maxMap][20];
 
-    /*public ArrayList<Entyti> projectList = new ArrayList<>();*/
+
     public  ArrayList<Entyti> particleList = new ArrayList<>();
     public ArrayList<Entyti> entytiList = new ArrayList<>();
 
@@ -82,6 +82,7 @@ public class GamePanel extends JPanel implements  Runnable{
     public  final  int gameOverState = 6;
     public  final  int transitionState  = 7;
     public  final  int tradeState  = 8;
+    public  final  int sleepState = 9;
 
 
 

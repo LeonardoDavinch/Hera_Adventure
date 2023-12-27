@@ -476,10 +476,11 @@ public class UI {
 
         //draw players items
         for (int i = 0; i < entyti.inventory.size(); i++) {
+
             //Equip cursor
             if(entyti.inventory.get(i) == entyti.currentWeapon||
-            entyti.inventory.get(i) == entyti.currentShiled){
-                g2.setColor(new Color(140, 131, 131));
+            entyti.inventory.get(i) == entyti.currentShiled || entyti.inventory.get(i) == entyti.currentLight){
+                g2.setColor(new Color(121, 95, 95));
                 g2.fillRoundRect(slotX,slotY,gp.tileSize,gp.tileSize,10,10 );
             }
 

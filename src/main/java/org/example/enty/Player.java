@@ -18,6 +18,7 @@ public class Player extends  Entyti{
     public  final  int screenY;
     public  int standCounter = 0;
     public  boolean attacCanceled = false;
+    public  boolean lightUpdate = false;
 
     public  Player(GamePanel gp, KeyHandler keyH){
         super(gp);
@@ -470,6 +471,16 @@ public class Player extends  Entyti{
 
                 currentShiled = selectItem;
                 defense = getDefense();
+            }
+            if(selectItem.type == type_light){
+
+                if(currentLight == selectItem){
+                    currentLight = null;
+                }
+                else {
+                    currentLight  = selectItem;
+                }
+                lightUpdate = true;
             }
             if(selectItem.type == type_consumable){
 

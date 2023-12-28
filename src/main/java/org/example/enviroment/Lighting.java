@@ -82,6 +82,11 @@ public class Lighting {
 
         g2.dispose();
     }
+    public  void resetDat(){
+        dayState = day;
+        filterAlpha = 0f;
+
+    }
     public  void  update(){
         if(gp.player.lightUpdate == true){
             setLightSource();

@@ -88,7 +88,9 @@ public class KeyHandler implements KeyListener {
                 gp.playMusic(0);
             }
             if (gp.ui.comandNum == 1) {
-                //add later
+                 gp.saveLoad.load();
+                gp.gameState = gp.PlayState;
+                gp.playMusic(0);
             }
             if (gp.ui.comandNum == 2) {
                 System.exit(0);
@@ -152,7 +154,7 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_R) {
             switch (gp.currentMap) {
                 case 0:
-                    gp.titleManeger.loadMap("/maps/Test1.txt", 0);
+                    gp.titleManeger.loadMap("/maps/worldmap.txt", 0);
                     break;
                 case 1:
                     gp.titleManeger.loadMap("/Map/interior01.txt", 1);
@@ -276,12 +278,12 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_ENTER) {
             if (gp.ui.comandNum == 0) {
                 gp.gameState = gp.PlayState;
-                gp.retry();
+                gp.resetGame(false);
                 gp.playMusic(0);
 
             } else if (gp.ui.comandNum == 1) {
-                gp.gameState = gp.tileSize;
-                gp.restart();
+                gp.gameState = gp.titelState;
+                gp.resetGame(true);
             }
         }
     }

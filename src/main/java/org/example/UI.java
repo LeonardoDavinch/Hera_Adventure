@@ -802,8 +802,9 @@ public class UI {
         if(comandNum == 0){
             g2.drawString(">",textX-25,textY);
             if(gp.keyH.enterPressed == true){
-                subState =0;
+                subState = 0;
                 gp.gameState = gp.titelState;
+                gp.resetGame(true);
             }
         }
 

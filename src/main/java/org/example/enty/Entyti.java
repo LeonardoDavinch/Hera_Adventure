@@ -43,6 +43,8 @@ public class Entyti {
     public  boolean guarding = false;
     public  boolean transparent = false;
     public  boolean offBalance = false;
+   public  Entyti loot;
+    public boolean opened = false;
 
 
 
@@ -153,6 +155,9 @@ public class Entyti {
     public  int getGoalRow(Entyti target){
         int goalCol =(target.worldY + target.solidArea.y)/gp.tileSize;
         return goalCol;
+    }
+    public  void  setLoot(Entyti loot){
+
     }
    public  void  setAction(){
     }
@@ -511,10 +516,11 @@ public class Entyti {
                     spritCounter =- 60;
 
                 }
+                else {
                     //Normal guard
                     damage /= 3;
                     gp.playSE(15);
-
+                }
             }
             else {
                 gp.playSE(6);
@@ -742,10 +748,10 @@ public class Entyti {
         int nextWorldY = user.getTopY();
 
         switch (user.directory){
-            case "up":nextWorldY = user.getTopY()-1;break;
-            case "down":nextWorldY = user.getBottomY()+1;break;
-            case "left":nextWorldX = user.getLeftX()-1;break;
-            case "right":nextWorldX = user.getRightX()+1;break;
+            case "up":nextWorldY = user.getTopY()-gp.player.speed;break;
+            case "down":nextWorldY = user.getBottomY()+gp.player.speed;break;
+            case "left":nextWorldX = user.getLeftX()-gp.player.speed;;break;
+            case "right":nextWorldX = user.getRightX()+gp.player.speed;;break;
         }
         int col = nextWorldX / gp.tileSize;
         int row = nextWorldY / gp.tileSize;

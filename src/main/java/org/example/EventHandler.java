@@ -126,10 +126,12 @@ public class EventHandler {
             gp.gameState = gameState;
             gp.player.attacCanceled = true;
             gp.playSE(2);
-            gp.ui.currentdialogue = "You drink the wather.\nYour life and mana have been recovered";
+            gp.ui.currentdialogue = "You drink the wather.\nYour life and mana have been recovered.\n" +
+                    "(The progres has been saved)";
             gp.player.life = gp.player.maxLife;
             gp.player.mana = gp.player.maxMana;
             gp.aSetter.setMonster();
+            gp.saveLoad.save();
         }
     }
     public  void  speak(Entyti entyti){

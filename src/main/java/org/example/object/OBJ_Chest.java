@@ -9,14 +9,10 @@ import java.io.IOException;
 public class OBJ_Chest extends Entyti {
 
 GamePanel gp;
-Entyti loot;
-boolean opened = false;
 
-
-    public  OBJ_Chest(GamePanel gp, Entyti loot){
+    public  OBJ_Chest(GamePanel gp){
         super(gp);
         this.gp = gp;
-        this.loot = loot;
 
         type = type_obstacle;
         name = "Chest";
@@ -31,6 +27,9 @@ boolean opened = false;
         solidArea.height = 32;
         solidAreaDefaulX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+    }
+    public  void  setLoot(Entyti loot){
+        this.loot =loot;
     }
     public  void  interact(){
 

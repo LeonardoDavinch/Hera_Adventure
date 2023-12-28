@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.Data.SaveLoad;
 import org.example.ai.PathFinder;
 import org.example.enty.Entyti;
 import org.example.enty.Player;
@@ -56,6 +57,7 @@ public class GamePanel extends JPanel implements  Runnable{
     Thread  gameThread;
     public  CollisionChecker oChecker = new CollisionChecker(this);
     public  AsserSetter aSetter = new AsserSetter(this);
+    SaveLoad saveLoad =new SaveLoad(this);
 
     //Entitty object
     public Player player = new Player(this,keyH);
@@ -88,9 +90,6 @@ public class GamePanel extends JPanel implements  Runnable{
 
 
 
-
-
-
     public  GamePanel (){
         this.setPreferredSize(new Dimension(screenWidh,screenHeight));
         this.setBackground(Color.BLACK);
@@ -117,26 +116,21 @@ public class GamePanel extends JPanel implements  Runnable{
         }
 
     }
-    public  void  retry(){
+    public  void  resetGame(boolean restart){
 
         player.setDefaultPostions();
-        player.restoreLifeAndMan();
+        player.restoreStatus();
         aSetter.setNPC();
         aSetter.setMonster();
 
+        if(restart == true){
+            player.setDefaultVale();
+            aSetter.setObject_();
+            aSetter.setInteractiveTile();
+            eMeneger.lighting.resetDat();
+        }
     }
-    public  void  restart(){
 
-        player.setDefaultVale();
-        player.setDefaultPostions();
-        player.restoreLifeAndMan();
-        player.setItems();
-        aSetter.setObject_();
-        aSetter.setNPC();
-        aSetter.setMonster();
-        aSetter.setInteractiveTile();
-
-    }
     public  void  setFullScreen(){
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             GraphicsDevice gd = ge.getDefaultScreenDevice();

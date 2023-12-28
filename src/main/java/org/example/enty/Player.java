@@ -38,10 +38,7 @@ public class Player extends  Entyti{
 
 
         setDefaultVale();
-        getImage();
-        getAttac();
-        getGuardImage();
-        setItems();
+
     }
 
     public  void  setDefaultVale(){
@@ -66,21 +63,31 @@ public class Player extends  Entyti{
         coin = 5000;
         currentWeapon = new OBJ_Sword_Normal(gp);
         currentShiled = new OBJ_Shield_Wood(gp);
+        currentLight = null;
         projectile = new OBJ_Fireball(gp);
         attack = getAttack();
         defense = getDefense();
+
+        getImage();
+        getAttacImage();
+        getGuardImage();
+        setItems();
     }
     public  void  setDefaultPostions(){
         worldX = gp.tileSize * 23;
         worldY = gp.tileSize * 21;
         directory = "down";
     }
-    public  void  restoreLifeAndMan(){
+    public  void  restoreStatus(){
 
         life = maxLife;
         mana = maxMana;
         invicible = false;
         transparent = false;
+        attacing = false;
+        guarding = false;
+        knockBack = false;
+        lightUpdate = true;
 
     }
     public  void  setItems(){
@@ -98,6 +105,24 @@ public class Player extends  Entyti{
         motion1_duration  = currentWeapon.motion1_duration;
         motion2_duration  = currentWeapon.motion2_duration;
         return  attack = strength * currentWeapon.ataccValue;
+    }
+    public  int getCurrentWeaponSlot(){
+        int curentWeaponSlot = 0;
+        for (int i = 0; i < inventory.size(); i++) {
+            if(inventory.get(i) == currentWeapon){
+                curentWeaponSlot = i;
+            }
+        }
+        return curentWeaponSlot;
+    }
+    public  int getCurrentSheldSlot(){
+        int curentSheldSlot = 0;
+        for (int i = 0; i < inventory.size(); i++) {
+            if(inventory.get(i) == currentShiled){
+                curentSheldSlot = i;
+            }
+        }
+        return curentSheldSlot;
     }
     public  int getDefense(){
         return  defense = dexsterity * currentShiled.defenseValue;
@@ -123,7 +148,7 @@ public class Player extends  Entyti{
         right1= image;
         right2= image;
     }
-    public  void  getAttac(){
+    public  void getAttacImage(){
 
         if(currentWeapon.type == type_sword) {
             attacUp1 = setup("/player/Attacking sprites/boy_attack_up_1", gp.tileSize, gp.tileSize * 2);
@@ -300,12 +325,12 @@ public class Player extends  Entyti{
         if(mana > maxMana){
             mana = maxMana;
         }
-  /*      if(life < 0 ){
+        if(life < 0 ){
             gp.gameState = gp.gameOverState;
             gp.ui.comandNum -= 1 ;
             gp.stopMusic();
             gp.playSE(12);
-        }*/
+        }
     }
 
     public  void  pickUpObject(int i){
@@ -475,7 +500,7 @@ public class Player extends  Entyti{
 
                 currentWeapon =selectItem;
                 attack = getAttack();
-                getAttac();
+                getAttacImage();
             }
             if(selectItem.type == type_shield){
 

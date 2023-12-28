@@ -24,6 +24,7 @@ public class MON_Orc  extends Entyti {
         attack = 8;
         defense = 2;
         exp = 10;
+        knockBackPower =5;
 
         solidArea.x = 4;
         solidArea.y = 4;
@@ -86,7 +87,7 @@ public class MON_Orc  extends Entyti {
     }
     public  void  damageReaction(){
         actionLoockCounter = 0;
-        //directory = gp.player.directory;
+        directory = gp.player.directory;
         onPath = true;
     }
     public  void  checkDrop(){

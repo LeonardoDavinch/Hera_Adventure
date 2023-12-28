@@ -15,7 +15,8 @@ public class Entyti {
     GamePanel gp;
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     public  BufferedImage attacUp1, attacUp2,attacDown1,attactDown2,
-    attacLeft1,attacLeft2,attacRight1,attacRight2;
+    attacLeft1,attacLeft2,attacRight1,attacRight2,guardUp,guardDown,guardLeft,guardRight;
+
     public Rectangle solidArea = new Rectangle(0, 0, 48 ,48);
     public  Rectangle attacArea = new Rectangle(0,0,0,0);
     public  int solidAreaDefaulX , solidAreaDefaultY;
@@ -39,6 +40,10 @@ public class Entyti {
     public  boolean onPath = false;
     public  boolean knockBack = false;
     public  String knockBackDirectory ;
+    public  boolean guarding = false;
+    public  boolean transparent = false;
+    public  boolean offBalance = false;
+
 
 
     //Counter
@@ -49,6 +54,8 @@ public class Entyti {
     public  int hpBarCounter = 0;
     public  int shotAvaliableCounter = 0;
     public  int knockBackCounter = 0;
+    public  int guardCounter = 0;
+    public  int offBalanceCounter = 0;
 
 
     //Character Atributs
@@ -243,29 +250,38 @@ public class Entyti {
     }
     public  void  update(){
 
-        if(knockBack == true){
+        if(knockBack == true) {
             checkColision();
 
-            if(collisionOn == true){
+            if (collisionOn == true) {
                 knockBackCounter = 0;
                 knockBack = false;
                 speed = defauldSpeed;
             } else if (collisionOn == false) {
-                switch (knockBackDirectory){
-                    case "up": worldY -= speed;break;
-                    case "down": worldY += speed;break;
-                    case "left": worldX -= speed;break;
-                    case "right": worldX += speed;break;
+                switch (knockBackDirectory) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
                 }
             }
             knockBackCounter++;
-            if(knockBackCounter == 10){
+            if (knockBackCounter == 10) {
                 knockBackCounter = 0;
                 knockBack = false;
-                speed =defauldSpeed;
+                speed = defauldSpeed;
             }
+        }
 
-        } else if (attacing == true) {
+        else if (attacing == true) {
                 attacing();
         } else {
             setAction();
@@ -292,9 +308,6 @@ public class Entyti {
 
         }
 
-
-
-
         if(invicible == true){
             invicibleCounter ++;
             if(invicibleCounter > 40 ){
@@ -304,6 +317,14 @@ public class Entyti {
         }
         if(shotAvaliableCounter < 30) {
             shotAvaliableCounter++;
+        }
+        if(offBalance == true){
+            offBalanceCounter++;
+            if(offBalanceCounter > 60){
+                offBalance = false;
+                offBalanceCounter = 0;
+
+            }
         }
     }
     public  void  checkAttacOrNot(int rate,int straight,int holizontal ){
@@ -406,6 +427,18 @@ public class Entyti {
         }
 
     }
+    public  String getOppositeDirection(String directory){
+
+        String oppositeDirection = "";
+
+        switch (directory){
+            case "up": oppositeDirection = "down";break;
+            case "down":oppositeDirection = "up";break;
+            case "left":oppositeDirection = "right";break;
+            case "right":oppositeDirection = "left";break;
+        }
+        return  oppositeDirection;
+    }
     public  void  attacing(){
         spritCounter++;
 
@@ -462,12 +495,39 @@ public class Entyti {
     public  void damagePlayer(int attack){
 
         if(gp.player.invicible == false){
-            gp.playSE(6);
 
             int damage = attack - gp.player.defense;
-            if(damage < 0 ){
-                damage = 0;
+
+            String canGuardDirection = getOppositeDirection(directory);
+
+            if(gp.player.guarding == true && gp.player.directory.equals(canGuardDirection)){
+
+                //Parry
+                if(gp.player.guardCounter < 10){
+                    damage = 0;
+                    gp.playSE(16);
+                    setknockBack(this,gp.player,knockBackPower);
+                    offBalance = true;
+                    spritCounter =- 60;
+
+                }
+                    //Normal guard
+                    damage /= 3;
+                    gp.playSE(15);
+
             }
+            else {
+                gp.playSE(6);
+                if(damage < 1 ){
+                    damage = 1;
+                }
+            }
+
+            if(damage != 0){
+                gp.player.transparent = true;
+                setknockBack(gp.player,this,knockBackPower);
+            }
+
             gp.player.life -= damage;
             gp.player.invicible =true;
         }

@@ -906,7 +906,7 @@ public class UI {
                 gp.eMeneger.lighting.dayState = gp.eMeneger.lighting.day;
                 gp.eMeneger.lighting.dayCounter = 0;
                 gp.gameState = gp.PlayState;
-                gp.player.getPlayerImage();
+                gp.player.getImage();
 
             }
         }

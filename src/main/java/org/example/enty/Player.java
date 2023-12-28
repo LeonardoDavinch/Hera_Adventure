@@ -38,8 +38,9 @@ public class Player extends  Entyti{
 
 
         setDefaultVale();
-        getPlayerImage();
-        getPlayerAttac();
+        getImage();
+        getAttac();
+        getGuardImage();
         setItems();
     }
 
@@ -79,6 +80,7 @@ public class Player extends  Entyti{
         life = maxLife;
         mana = maxMana;
         invicible = false;
+        transparent = false;
 
     }
     public  void  setItems(){
@@ -100,7 +102,7 @@ public class Player extends  Entyti{
     public  int getDefense(){
         return  defense = dexsterity * currentShiled.defenseValue;
     }
-    public  void  getPlayerImage(){
+    public  void  getImage(){
         up1 = setup("/player/Walking sprites/boy_up_1",gp.tileSize,gp.tileSize);
         up2 = setup("/player/Walking sprites/boy_up_2",gp.tileSize,gp.tileSize);
         down1 = setup("/player/Walking sprites/boy_down_1",gp.tileSize,gp.tileSize);
@@ -121,7 +123,7 @@ public class Player extends  Entyti{
         right1= image;
         right2= image;
     }
-    public  void  getPlayerAttac(){
+    public  void  getAttac(){
 
         if(currentWeapon.type == type_sword) {
             attacUp1 = setup("/player/Attacking sprites/boy_attack_up_1", gp.tileSize, gp.tileSize * 2);
@@ -144,25 +146,61 @@ public class Player extends  Entyti{
             attacRight2 = setup("/player/Attacking sprites/boy_axe_right_2", gp.tileSize * 2, gp.tileSize);
         }
     }
-
+    public  void  getGuardImage(){
+        guardUp = setup("/player/Guarding sprites/boy_guard_up",gp.tileSize,gp.tileSize);
+        guardDown = setup("/player/Guarding sprites/boy_guard_down",gp.tileSize,gp.tileSize);
+        guardLeft = setup("/player/Guarding sprites/boy_guard_left",gp.tileSize,gp.tileSize);
+        guardRight = setup("/player/Guarding sprites/boy_guard_right",gp.tileSize,gp.tileSize);
+    }
     public  void  update() {
 
-        if(attacing == true){
-        attacing();
+        if(knockBack == true) {
 
+
+            //Check tile collision
+            collisionOn = false;
+            gp.oChecker.checkTile(this);
+            gp.oChecker.checkObhect(this,true);
+            gp.oChecker.checkEntity(this, gp.npc);
+            gp.oChecker.checkEntity(this,gp.monster);
+            gp.oChecker.checkEntity(this,gp.iTile);
+
+            if (collisionOn == true) {
+                knockBackCounter = 0;
+                knockBack = false;
+                speed = defauldSpeed;
+            }
+            else if (collisionOn == false) {
+                switch (knockBackDirectory) {
+                    case "up": worldY -= speed;break;
+                    case "down":worldY += speed;break;
+                    case "left": worldX -= speed;break;
+                    case "right":worldX += speed;break;
+                }
+            }
+
+            knockBackCounter++;
+            if (knockBackCounter == 10) {
+                knockBackCounter = 0;
+                knockBack = false;
+                speed = defauldSpeed;
+            }
         }
+        else if(attacing == true){
+            attacing();
+        }
+        else if(keyH.spacePressed == true){
+            guarding = true;
+            guardCounter++;
+        }
+
        else if (keyH.upPressed == true || keyH.downPressed == true
                 || keyH.leftPressed == true || keyH.rightPressed == true || keyH.enterPressed == true) {
 
-            if (keyH.upPressed == true) {
-                directory = "up";
-            } else if (keyH.downPressed == true) {
-                directory = "down";
-            } else if (keyH.leftPressed == true) {
-                directory = "left";
-            } else if (keyH.rightPressed == true) {
-                directory = "right";
-            }
+            if (keyH.upPressed == true) {directory = "up";}
+            else if (keyH.downPressed == true) {directory = "down";}
+            else if (keyH.leftPressed == true) {directory = "left";}
+            else if (keyH.rightPressed == true) {directory = "right";}
 
             //Check tile collision
             collisionOn = false;
@@ -186,7 +224,6 @@ public class Player extends  Entyti{
             //Check event
             gp.eHandler.checkEvent();
 
-
             //if colision is false. plater can move
             if(collisionOn == false && keyH.enterPressed == false){
                 switch (directory ){
@@ -203,8 +240,9 @@ public class Player extends  Entyti{
             }
 
             attacCanceled = false;
-
             gp.keyH.enterPressed = false;
+            guarding = false;
+            guardCounter = 0;
 
             spritCounter++;
             if (spritCounter > 12) {
@@ -216,14 +254,22 @@ public class Player extends  Entyti{
                 spritCounter = 0;
             }
         }
+       else {
+           standCounter++;
+           if(standCounter == 20){
+               sprintNum =1;
+               standCounter = 0;
+           }
+           guarding = false;
+           guardCounter = 0;
+        }
+
        if (gp.keyH.shotKeyPressed == true && projectile.alive == false && shotAvaliableCounter == 30
        && projectile.haveResourse(this) == true) {
 
             projectile.set(worldX,worldY,directory,true,this);
 
             projectile.subtracktResourse(this);
-
-           /* gp.projectList.add(projectile);*/
 
            //check vacancy
            for (int i = 0; i < gp.projectile[1].length; i++) {
@@ -232,7 +278,6 @@ public class Player extends  Entyti{
                    break;
                }
            }
-
            shotAvaliableCounter = 0;
 
             gp.playSE(10);
@@ -242,6 +287,7 @@ public class Player extends  Entyti{
             invicibleCounter ++;
             if(invicibleCounter > 60 ){
                 invicible = false;
+                transparent = false;
                 invicibleCounter = 0;
             }
         }
@@ -254,12 +300,12 @@ public class Player extends  Entyti{
         if(mana > maxMana){
             mana = maxMana;
         }
-        if(life < 0 ){
+  /*      if(life < 0 ){
             gp.gameState = gp.gameOverState;
             gp.ui.comandNum -= 1 ;
             gp.stopMusic();
             gp.playSE(12);
-        }
+        }*/
     }
 
     public  void  pickUpObject(int i){
@@ -313,12 +359,12 @@ public class Player extends  Entyti{
                 gp.playSE(6);
 
                 int damage = gp.monster[gp.currentMap][i].attack - defense;
-                if(damage < 0 ){
-                    damage = 0;
+                if(damage < 1 ){
+                    damage = 1;
                 }
                 life -= damage;
-
                 invicible = true;
+                transparent = true;
             }
         }
     }
@@ -327,10 +373,13 @@ public class Player extends  Entyti{
             if (gp.monster[gp.currentMap][i].invicible == false) {
 
                 gp.playSE(5);
+
                 if(knockBackPower > 0){
                     setknockBack(gp.monster[gp.currentMap][i],attaker, knockBackPower);
                 }
-
+                if(gp.monster[gp.currentMap][i].offBalance == true){
+                    attack *= 5;
+                }
 
                 int damage = attack - gp.monster[gp.currentMap][i].defense;
                 if (damage < 0) {
@@ -426,7 +475,7 @@ public class Player extends  Entyti{
 
                 currentWeapon =selectItem;
                 attack = getAttack();
-                getPlayerAttac();
+                getAttac();
             }
             if(selectItem.type == type_shield){
 
@@ -513,6 +562,9 @@ public class Player extends  Entyti{
                     if(sprintNum == 1) {image = attacUp1;}
                     if(sprintNum == 2){image = attacUp2;}
                 }
+                if(guarding == true){
+                    image = guardUp;
+                }
                 break;
             case "down":
                 if(attacing == false){
@@ -522,6 +574,9 @@ public class Player extends  Entyti{
                 if( attacing == true){
                     if(sprintNum == 1) {image = attacDown1;}
                     if(sprintNum == 2){image = attactDown2;}
+                }
+                if(guarding == true){
+                    image = guardDown;
                 }
                 break;
             case "left":
@@ -534,6 +589,9 @@ public class Player extends  Entyti{
                     if(sprintNum == 1) {image = attacLeft1;}
                     if (sprintNum == 2){image = attacLeft2;}
                 }
+                if(guarding == true){
+                    image = guardLeft;
+                }
                 break;
             case "right":
                 if(attacing == false){
@@ -544,10 +602,13 @@ public class Player extends  Entyti{
                     if(sprintNum == 1) {image = attacRight1;}
                     if(sprintNum == 2){image =attacRight2;}
                 }
+                if(guarding == true){
+                    image = guardRight;
+                }
                 break;
         }
 
-        if(invicible == true){
+        if(transparent == true){
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.3f));
         }
        g2.drawImage(image,tempScreenX,tempScreenY,null);

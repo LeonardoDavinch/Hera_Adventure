@@ -52,6 +52,7 @@ public class GamePanel extends JPanel implements  Runnable{
     Config config =new Config(this);
     public PathFinder pFinder = new PathFinder(this);
     EnviromentManager eMeneger = new EnviromentManager(this);
+    Map map =new Map(this);
     Thread  gameThread;
     public  CollisionChecker oChecker = new CollisionChecker(this);
     public  AsserSetter aSetter = new AsserSetter(this);
@@ -83,6 +84,8 @@ public class GamePanel extends JPanel implements  Runnable{
     public  final  int transitionState  = 7;
     public  final  int tradeState  = 8;
     public  final  int sleepState = 9;
+    public  final  int mapState = 10;
+
 
 
 
@@ -249,6 +252,10 @@ public class GamePanel extends JPanel implements  Runnable{
         if (gameState == titelState) {
             ui.draw(g2);
         }
+        //Map Screen
+        else if (gameState == mapState) {
+            map.drawFullMapScreen(g2);
+        }
         //Otheer
         else {
 
@@ -312,6 +319,9 @@ public class GamePanel extends JPanel implements  Runnable{
 
             //Enviroment
             eMeneger.draw(g2);
+
+            //Mini map
+            map.drawMiniMap(g2);
             //Ui
             ui.draw(g2);
         }

@@ -45,8 +45,8 @@ public class Player extends  Entyti{
 
     public  void  setDefaultVale(){
 
-        worldX = gp.tileSize * 10;
-        worldY = gp.tileSize * 8;
+        worldX = gp.tileSize * 23;
+        worldY = gp.tileSize * 21;
         defauldSpeed = 4;
         speed = defauldSpeed;
         directory = "down";

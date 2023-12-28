@@ -43,7 +43,7 @@ public class TitleManeger {
         tiles=new Tile[fileNames.size()];
         getTitelImage();
 
-        is = getClass().getResourceAsStream("/maps/Test1.txt");
+        is = getClass().getResourceAsStream("/maps/worldmap.txt");
         br = new BufferedReader(new InputStreamReader(is));
 
         try{
@@ -58,12 +58,10 @@ public class TitleManeger {
         }catch (IOException o){
             o.printStackTrace();
         }
-        loadMap("/maps/Test1.txt",0);
+        loadMap("/maps/worldmap.txt",0);
+        loadMap("/maps/indoor01.txt",1);
 
 
-/*
-        loadMap("/Map/worldV2.txt",0);
-        loadMap("/Map/interior01.txt",1);*/
     }
 
     public  void  loadMap(String filePath , int map){

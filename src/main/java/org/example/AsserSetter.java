@@ -32,15 +32,15 @@ public class AsserSetter {
         gp.obj[mapNum][i].worldY = gp.tileSize * 20;
         i++;
         gp.obj[mapNum][i] = new OBJ_Door(gp);
-        gp.obj[mapNum][i].worldX = gp.tileSize * 12;
+        gp.obj[mapNum][i].worldX = gp.tileSize * 13;
         gp.obj[mapNum][i].worldY = gp.tileSize * 23;
         i++;
         gp.obj[mapNum][i] = new OBJ_Door(gp);
-        gp.obj[mapNum][i].worldX = gp.tileSize * 8;
-        gp.obj[mapNum][i].worldY = gp.tileSize * 27;
+        gp.obj[mapNum][i].worldX = gp.tileSize * 10;
+        gp.obj[mapNum][i].worldY = gp.tileSize * 28;
         i++;
         gp.obj[mapNum][i] = new OBJ_Door(gp);
-        gp.obj[mapNum][i].worldX = gp.tileSize * 10;
+        gp.obj[mapNum][i].worldX = gp.tileSize * 12;
         gp.obj[mapNum][i].worldY = gp.tileSize * 12;
         i++;
         gp.obj[mapNum][i] = new OBJ_Chest(gp,new OBJ_Key(gp));
@@ -101,14 +101,20 @@ public class AsserSetter {
         gp.iTile[mapNum][i] = new IT_DryTree(gp,31,12);i++;
         gp.iTile[mapNum][i] = new IT_DryTree(gp,32,12);i++;
         gp.iTile[mapNum][i] = new IT_DryTree(gp,33,12);i++;
-        gp.iTile[mapNum][i] = new IT_DryTree(gp,29,21);i++;
+
+        gp.iTile[mapNum][i] = new IT_DryTree(gp,31,21);i++;
 
         gp.iTile[mapNum][i] = new IT_DryTree(gp,36,30);i++;
 
-        gp.iTile[mapNum][i] = new IT_DryTree(gp,34,28);i++;
-        gp.iTile[mapNum][i] = new IT_DryTree(gp,33,28);i++;
-        gp.iTile[mapNum][i] = new IT_DryTree(gp,32,28);i++;
-        gp.iTile[mapNum][i] = new IT_DryTree(gp,31,28);i++;
+        gp.iTile[mapNum][i] = new IT_DryTree(gp,29,31);i++;
+        gp.iTile[mapNum][i] = new IT_DryTree(gp,28,31);i++;
+        gp.iTile[mapNum][i] = new IT_DryTree(gp,27,31);i++;
+        gp.iTile[mapNum][i] = new IT_DryTree(gp,27,30);i++;
+        gp.iTile[mapNum][i] = new IT_DryTree(gp,27,29);i++;
+        gp.iTile[mapNum][i] = new IT_DryTree(gp,27,28);i++;
+        gp.iTile[mapNum][i] = new IT_DryTree(gp,27,27);i++;
+        gp.iTile[mapNum][i] = new IT_DryTree(gp,26,27);i++;
+        gp.iTile[mapNum][i] = new IT_DryTree(gp,25,27);i++;
 
         gp.iTile[mapNum][i] = new IT_DryTree(gp,10,40);i++;
         gp.iTile[mapNum][i] = new IT_DryTree(gp,10,41);i++;

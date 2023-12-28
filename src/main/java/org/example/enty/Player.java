@@ -93,7 +93,8 @@ public class Player extends  Entyti{
     }
     public  int  getAttack(){
         attacArea = currentWeapon.attacArea;
-
+        motion1_duration  = currentWeapon.motion1_duration;
+        motion2_duration  = currentWeapon.motion2_duration;
         return  attack = strength * currentWeapon.ataccValue;
     }
     public  int getDefense(){
@@ -260,51 +261,7 @@ public class Player extends  Entyti{
             gp.playSE(12);
         }
     }
-    public  void  attacing(){
-        spritCounter++;
 
-        if(spritCounter <= 5){
-            sprintNum =1;
-        }
-        if(spritCounter > 5 && spritCounter <=25){
-            sprintNum = 2;
-
-            int currentWorldX = worldX;
-            int currentWorldY = worldY;
-            int solidAreaWidh = solidArea.width;
-            int solidAreaHeight = solidArea.height;
-
-            switch (directory){
-                case "up": worldY -= attacArea.height;break;
-                case "down": worldY += attacArea.width;break;
-                case "left": worldX -= attacArea.height;break;
-                case "roght": worldX += attacArea.width;break;
-            }
-            solidArea.width = attacArea.width;
-            solidArea.height = attacArea.height;
-
-            //check monster colision
-            int monsterIndex = gp.oChecker.checkEntity(this,gp.monster);
-            damageMonster(monsterIndex,attack,currentWeapon.knockBackPower);
-
-            int iTileIndex = gp.oChecker.checkEntity(this,gp.iTile);
-            damageInteractiveTille(iTileIndex);
-
-            int projectileIndex = gp.oChecker.checkEntity(this,gp.projectile);
-            damageProjectile(projectileIndex);
-
-            worldX = currentWorldX;
-            worldY = currentWorldY;
-            solidArea.width = solidAreaWidh;
-            solidArea.height = solidAreaHeight;
-
-        }
-        if(spritCounter > 25){
-            sprintNum = 1;
-            spritCounter = 0;
-            attacing = false;
-        }
-    }
     public  void  pickUpObject(int i){
         if(i != 999){
             //pickup only items
@@ -365,13 +322,13 @@ public class Player extends  Entyti{
             }
         }
     }
-    public  void  damageMonster(int i ,int attack,int knockBackPower){
+    public  void  damageMonster(int i ,Entyti attaker, int attack,int knockBackPower){
         if( i != 999) {
             if (gp.monster[gp.currentMap][i].invicible == false) {
 
                 gp.playSE(5);
                 if(knockBackPower > 0){
-                    knockBack(gp.monster[gp.currentMap][i],knockBackPower);
+                    setknockBack(gp.monster[gp.currentMap][i],attaker, knockBackPower);
                 }
 
 
@@ -411,12 +368,6 @@ public class Player extends  Entyti{
                 },
                 respawnDelay
         );
-    }
-    public  void  knockBack (Entyti entyti,int knockBackPower){
-        entyti.directory = directory;
-        entyti.speed += knockBackPower;
-        entyti.knockBack = true;
-
     }
 
     public  void  damageInteractiveTille(int i){

@@ -2,6 +2,7 @@ package org.example;
 
 
 import org.example.Monsters.MON_GreanSlime;
+import org.example.Monsters.MON_Orc;
 import org.example.enty.NPC_Merchant;
 import org.example.enty.NPC_OldMan;
 import org.example.object.*;
@@ -32,8 +33,8 @@ public class AsserSetter {
         gp.obj[mapNum][i].worldY = gp.tileSize * 20;
         i++;
         gp.obj[mapNum][i] = new OBJ_Door(gp);
-        gp.obj[mapNum][i].worldX = gp.tileSize * 13;
-        gp.obj[mapNum][i].worldY = gp.tileSize * 23;
+        gp.obj[mapNum][i].worldX = gp.tileSize * 14;
+        gp.obj[mapNum][i].worldY = gp.tileSize * 28;
         i++;
         gp.obj[mapNum][i] = new OBJ_Door(gp);
         gp.obj[mapNum][i].worldX = gp.tileSize * 10;
@@ -87,6 +88,11 @@ public class AsserSetter {
                 gp.monster[mapNum][i] = new MON_GreanSlime(gp);
                 gp.monster[mapNum][i].worldX = gp.tileSize * 20;
                 gp.monster[mapNum][i].worldY = gp.tileSize * 38;
+                i++;
+                gp.monster[mapNum][i] = new MON_Orc(gp);
+                gp.monster[mapNum][i].worldX = gp.tileSize * 12;
+                gp.monster[mapNum][i].worldY = gp.tileSize * 33;
+                i++;
 
                 mapNum = 1;
 

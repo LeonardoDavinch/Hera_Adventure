@@ -36,25 +36,7 @@ public class MON_GreanSlime extends Entyti {
         getImage();
 
     }
-    public  void  update(){
 
-        super.update();
-
-        int xDistance = Math.abs(worldX - gp.player.worldX);
-        int yDistance = Math.abs(worldY - gp.player.worldY);
-        int tileDistance =(xDistance + yDistance)/gp.tileSize;
-
-        if(onPath == false && tileDistance < 5){
-
-            int i = new Random().nextInt(100)+1;
-            if(i > 50){
-                onPath = true;
-            }
-        }
-   /*     if(onPath == true && tileDistance > 20){
-            onPath = true;
-        }*/
-    }
     public  void  getImage(){
 
         up1 = setup("/monster/greenslime_down_1",gp.tileSize,gp.tileSize);
@@ -69,53 +51,24 @@ public class MON_GreanSlime extends Entyti {
 
     }
     public  void  setAction(){
+
         if(onPath == true){
 
-            int goalCol =(gp.player.worldX + gp.player.solidArea.x)/gp.tileSize;
-            int goalRow =(gp.player.worldY + gp.player.solidArea.y)/gp.tileSize;
+            //Check if it stops chasing
+            checkStopChasingOrNot(gp.player,15,100);
 
-            searchPath(goalCol,goalRow);
+            //Search the directory to go
+            searchPath(getGoalCoal(gp.player), getGoalRow(gp.player));
 
-            int i = new Random().nextInt(100) + 1;
-            if (i > 167 && projectile.alive == false && shotAvaliableCounter == 30) {
-
-                projectile.set(worldX, worldY, directory, true, this);
-                /*gp.projectList.add(projectile);*/
-
-             /*   //check Vacancy
-                for (int j = 0; j < gp.projectile[1].length; j++) {
-                    if(gp.projectile[gp.currentMap][j] == null){
-                        gp.projectile[gp.currentMap][j] = projectile;
-                        break;
-                    }
-                }*/
-
-                shotAvaliableCounter = 0;
-            }
+            //Check if it shots a projectly
+            checkShortOrNot(200,30);
         }
-        else{
-            actionLoockCounter++;
+        else {
 
-            if (actionLoockCounter == 120) {
-                Random random = new Random();
-                int i = random.nextInt(100) + 1;
-
-                if (i <= 25) {
-                    directory = "up";
-                }
-                if (i > 25 && i <= 50) {
-                    directory = "down";
-                }
-                if (i > 50 && i <= 75) {
-                    directory = "left";
-                }
-                if (i > 75 && i <= 100) {
-                    directory = "right";
-                }
-                actionLoockCounter = 0;
-            }
+            checkStartChasingOrNot(gp.player,5,100);
+            //go monster random moved
+            getRandomDirection();
         }
-
     }
     public  void  damageReaction(){
         actionLoockCounter = 0;

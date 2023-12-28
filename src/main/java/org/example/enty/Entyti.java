@@ -20,6 +20,7 @@ public class Entyti {
     public  Rectangle attacArea = new Rectangle(0,0,0,0);
     public  int solidAreaDefaulX , solidAreaDefaultY;
     public  String  dialogues[] = new String[20];
+    public  Entyti attacker;
     public  boolean collision = false;
     public BufferedImage image ,image2, image3;
 
@@ -37,6 +38,7 @@ public class Entyti {
     public  boolean hpBarOn = false;
     public  boolean onPath = false;
     public  boolean knockBack = false;
+    public  String knockBackDirectory ;
 
 
     //Counter
@@ -66,6 +68,9 @@ public class Entyti {
     public  int exp;
     public  int nextLevelExp;
     public  int coin;
+    public  int motion1_duration;
+    public  int motion2_duration;
+
     public  Entyti currentWeapon;
     public  Entyti currentShiled;
     public  Entyti currentLight;
@@ -100,11 +105,10 @@ public class Entyti {
     public  final  int type_obstacle = 8;
     public  final  int type_light = 9;
 
-
-
     public  Entyti (GamePanel gp){
         this.gp=gp;
     }
+
     public  int getLeftX(){
         return  worldX + solidArea.x;
     }
@@ -122,6 +126,26 @@ public class Entyti {
     }
     public  int getRow(){
         return (worldY + solidArea.y) / gp.tileSize;
+    }
+    public  int getXdistance(Entyti target){
+        int xDistance = Math.abs(worldX - target.worldX);
+        return  xDistance;
+    }
+    public  int getYdistance(Entyti target){
+        int yDistance = Math.abs(worldY - target.worldY);
+        return  yDistance;
+    }
+    public  int getTileDistance(Entyti target){
+        int tileDistance =(getXdistance(target) + getYdistance(target))/gp.tileSize;
+        return  tileDistance;
+    }
+    public  int getGoalCoal(Entyti target){
+        int goalCol =(target.worldX + target.solidArea.x)/gp.tileSize;
+        return goalCol;
+    }
+    public  int getGoalRow(Entyti target){
+        int goalCol =(target.worldY + target.solidArea.y)/gp.tileSize;
+        return goalCol;
     }
    public  void  setAction(){
     }
@@ -227,7 +251,7 @@ public class Entyti {
                 knockBack = false;
                 speed = defauldSpeed;
             } else if (collisionOn == false) {
-                switch (gp.player.directory){
+                switch (knockBackDirectory){
                     case "up": worldY -= speed;break;
                     case "down": worldY += speed;break;
                     case "left": worldX -= speed;break;
@@ -241,8 +265,9 @@ public class Entyti {
                 speed =defauldSpeed;
             }
 
-        }
-        else {
+        } else if (attacing == true) {
+                attacing();
+        } else {
             setAction();
             checkColision();
 
@@ -255,19 +280,20 @@ public class Entyti {
                     case "right": worldX += speed;break;
                 }
             }
-        }
-
-
-
-        spritCounter++;
-        if (spritCounter > 24) {
-            if (sprintNum == 1) {
-                sprintNum = 2;
-            } else if (sprintNum == 2) {
-                sprintNum = 1;
+            spritCounter++;
+            if (spritCounter > 24) {
+                if (sprintNum == 1) {
+                    sprintNum = 2;
+                } else if (sprintNum == 2) {
+                    sprintNum = 1;
+                }
+                spritCounter = 0;
             }
-            spritCounter = 0;
+
         }
+
+
+
 
         if(invicible == true){
             invicibleCounter ++;
@@ -278,6 +304,159 @@ public class Entyti {
         }
         if(shotAvaliableCounter < 30) {
             shotAvaliableCounter++;
+        }
+    }
+    public  void  checkAttacOrNot(int rate,int straight,int holizontal ){
+
+        boolean targetInRage = false;
+        int xDis = getXdistance(gp.player);
+        int yDis = getYdistance(gp.player);
+
+        switch (directory){
+            case "up":
+                if(gp.player.worldY < worldY && yDis < straight && xDis < holizontal){
+                    targetInRage = true;
+                }
+                break;
+            case "down":
+                if(gp.player.worldY > worldY && yDis < straight && xDis < holizontal){
+                    targetInRage = true;
+                }
+                break;
+            case "left":
+                if(gp.player.worldX < worldX && xDis < straight && yDis < holizontal){
+                    targetInRage = true;
+                }
+                break;
+            case "roght":
+                if(gp.player.worldX > worldX && xDis < straight && yDis < holizontal){
+                    targetInRage = true;
+                }
+                break;
+        }
+        if(targetInRage == true){
+            int i = new Random().nextInt(rate);
+            if(i == 0 ){
+                attacing = true;
+                sprintNum = 1;
+                spritCounter = 0;
+                shotAvaliableCounter = 0;
+            }
+        }
+
+    }
+    public  void  checkShortOrNot(int rate,int shotInterval){
+        int i = new Random().nextInt(rate);
+        if (i == 0 && projectile.alive == false && shotAvaliableCounter == shotInterval) {
+
+            projectile.set(worldX, worldY, directory, true, this);
+
+            //check Vacancy
+            for (int j = 0; j < gp.projectile[1].length; j++) {
+                if(gp.projectile[gp.currentMap][j] == null){
+                    gp.projectile[gp.currentMap][j] = projectile;
+                    break;
+                }
+            }
+
+            shotAvaliableCounter = 0;
+        }
+    }
+
+    public  void  getRandomDirection(){
+        actionLoockCounter++;
+
+        if (actionLoockCounter == 120) {
+            Random random = new Random();
+            int i = random.nextInt(100) + 1;
+
+            if (i <= 25) {
+                directory = "up";
+            }
+            if (i > 25 && i <= 50) {
+                directory = "down";
+            }
+            if (i > 50 && i <= 75) {
+                directory = "left";
+            }
+            if (i > 75 && i <= 100) {
+                directory = "right";
+            }
+            actionLoockCounter = 0;
+        }
+    }
+    public  void checkStartChasingOrNot(Entyti target,int distance , int rate){
+
+        if(getTileDistance(target) < distance){
+            int i = new Random( ).nextInt(rate);
+            if( i == 0){
+                onPath = true;
+            }
+        }
+
+    }
+    public  void checkStopChasingOrNot(Entyti target,int distance , int rate){
+
+        if(getTileDistance(target) > distance){
+            int i = new Random( ).nextInt(rate);
+            if( i == 0){
+                onPath = false;
+
+            }
+        }
+
+    }
+    public  void  attacing(){
+        spritCounter++;
+
+        if(spritCounter <= motion1_duration){
+            sprintNum =1;
+        }
+        if(spritCounter > motion1_duration && spritCounter <= motion2_duration){
+            sprintNum = 2;
+
+            int currentWorldX = worldX;
+            int currentWorldY = worldY;
+            int solidAreaWidh = solidArea.width;
+            int solidAreaHeight = solidArea.height;
+
+            switch (directory){
+                case "up": worldY -= attacArea.height;break;
+                case "down": worldY += attacArea.width;break;
+                case "left": worldX -= attacArea.height;break;
+                case "roght": worldX += attacArea.width;break;
+            }
+            solidArea.width = attacArea.width;
+            solidArea.height = attacArea.height;
+
+            if(type == type_monsters ){
+                if(gp.oChecker.checkPlayer(this) == true){
+                    damagePlayer(attack);
+                }
+            }
+            else {//Player
+                //check monster colision
+                int monsterIndex = gp.oChecker.checkEntity(this,gp.monster);
+                gp.player.damageMonster(monsterIndex,this, attack,currentWeapon.knockBackPower);
+
+                int iTileIndex = gp.oChecker.checkEntity(this,gp.iTile);
+                gp.player.damageInteractiveTille(iTileIndex);
+
+                int projectileIndex = gp.oChecker.checkEntity(this,gp.projectile);
+                gp.player.damageProjectile(projectileIndex);
+            }
+
+
+            worldX = currentWorldX;
+            worldY = currentWorldY;
+            solidArea.width = solidAreaWidh;
+            solidArea.height = solidAreaHeight;
+
+        }
+        if(spritCounter > motion2_duration){
+            sprintNum = 1;
+            spritCounter = 0;
+            attacing = false;
         }
     }
     public  void damagePlayer(int attack){
@@ -293,6 +472,14 @@ public class Entyti {
             gp.player.invicible =true;
         }
     }
+    public  void  setknockBack (Entyti target, Entyti attacker ,int knockBackPower){
+        this.attacker = attacker;
+        target.knockBackDirectory = attacker.directory;
+        target.speed += knockBackPower;
+        target.knockBack = true;
+
+    }
+
 
     public  void  draw(Graphics2D g2){
         BufferedImage image = null;
@@ -304,22 +491,51 @@ public class Entyti {
                 && worldY + gp.tileSize > gp.player.worldY - gp.player.screenY
                 && worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
 
+            int tempScreenX = screenX;
+            int tempScreenY = screenY;
+
             switch (directory) {
                 case "up":
-                    if(sprintNum == 1) {image = up1;}
-                    if(sprintNum == 2){image = up2;}
+                    if(attacing == false){
+                        if(sprintNum == 1) {image = up1;}
+                        if(sprintNum == 2){image = up2;}
+                    }
+                    if(attacing == true){
+                        tempScreenY = screenY - gp.tileSize;
+                        if(sprintNum == 1) {image = attacUp1;}
+                        if(sprintNum == 2){image = attacUp2;}
+                    }
                     break;
                 case "down":
-                    if(sprintNum == 1) {image = down1;}
-                    if(sprintNum == 2){image = down2;}
+                    if(attacing == false){
+                        if(sprintNum == 1) {image = down1;}
+                        if(sprintNum == 2){image = down2;}
+                    }
+                    if( attacing == true){
+                        if(sprintNum == 1) {image = attacDown1;}
+                        if(sprintNum == 2){image = attactDown2;}
+                    }
                     break;
                 case "left":
-                    if(sprintNum == 1) {image = left1;}
-                    if (sprintNum == 2){image = left2;}
+                    if(attacing == false){
+                        if(sprintNum == 1) {image = left1;}
+                        if (sprintNum == 2){image = left2;}
+                    }
+                    if(attacing == true){
+                        tempScreenX = screenX - gp.tileSize;
+                        if(sprintNum == 1) {image = attacLeft1;}
+                        if (sprintNum == 2){image = attacLeft2;}
+                    }
                     break;
                 case "right":
-                    if(sprintNum == 1) {image = right1;}
-                    if(sprintNum == 2){image =right2;}
+                    if(attacing == false){
+                        if(sprintNum == 1) {image = right1;}
+                        if(sprintNum == 2){image =right2;}
+                    }
+                    if(attacing == true){
+                        if(sprintNum == 1) {image = attacRight1;}
+                        if(sprintNum == 2){image =attacRight2;}
+                    }
                     break;
             }
             //Monster hp bar
@@ -350,7 +566,7 @@ public class Entyti {
                 dyingAnimation(g2);
             }
 
-            g2.drawImage(image,screenX,screenY,gp.tileSize,gp.tileSize,null);
+            g2.drawImage(image,tempScreenX,tempScreenY,null);
 
             changAlpha(g2,1f);
     }

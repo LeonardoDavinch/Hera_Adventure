@@ -17,6 +17,8 @@ public class OBJ_Sword_Normal extends Entyti {
         description = "["+name+"]\nAn old sword.";
         price = 20;
         knockBackPower = 2;
+        motion1_duration = 2;
+        motion2_duration = 10;
 
     }
 }

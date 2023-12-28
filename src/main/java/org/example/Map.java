@@ -46,6 +46,7 @@ public class Map  extends TitleManeger {
 
                 }
             }
+            g2.dispose();
 
         }
     }

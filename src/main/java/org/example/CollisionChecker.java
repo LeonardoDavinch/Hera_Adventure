@@ -21,6 +21,12 @@ public class CollisionChecker {
 
         int tileNum1 ,tileNum2;
 
+        String directory = entyti.directory;
+        if(entyti.knockBack == true){
+            directory = entyti.knockBackDirectory;
+
+        }
+
         switch (entyti.directory){
             case  "up": {
                 entityTopRow = (entityTopWorldY - entyti.speed) / gp.tileSize;
@@ -106,6 +112,12 @@ public class CollisionChecker {
     public  int checkEntity(Entyti entyty, Entyti[][] target){
         int indx = 999;
 
+        String directory = entyty.directory;
+        if(entyty.knockBack == true){
+            directory = entyty.knockBackDirectory;
+
+        }
+
         for (int i = 0; i < target[1].length; i++) {
             if(target[gp.currentMap][i] != null){
 
@@ -115,7 +127,7 @@ public class CollisionChecker {
                 target[gp.currentMap][i].solidArea.x = target[gp.currentMap][i].worldX + target[gp.currentMap][i].solidArea.x;
                 target[gp.currentMap][i].solidArea.y = target[gp.currentMap][i].worldY + target[gp.currentMap][i].solidArea.y;
 
-                switch (entyty.directory){
+                switch (directory){
                     case "up": entyty.solidArea.y -= entyty.speed; break;
                     case "down": entyty.solidArea.y += entyty.speed; break;
                     case "left": entyty.solidArea.x -= entyty.speed; break;

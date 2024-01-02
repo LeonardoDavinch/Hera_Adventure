@@ -179,7 +179,7 @@ public class KeyHandler implements KeyListener {
 
     public void dialogeState(int code) {
         if (code == KeyEvent.VK_ENTER) {
-            gp.gameState = gp.PlayState;
+           enterPressed = true;
         }
     }
 

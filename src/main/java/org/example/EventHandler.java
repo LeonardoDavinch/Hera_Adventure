@@ -7,6 +7,7 @@ import  java.awt.*;
 public class EventHandler {
     GamePanel gp;
     EventRect[][][] eventRect;
+    Entyti eventMaster;
 
     public  int previusEventX,previusEventY;
     public  boolean canTouchEvent = true;
@@ -14,6 +15,8 @@ public class EventHandler {
 
     public  EventHandler(GamePanel gp){
         this.gp=gp;
+
+        eventMaster = new Entyti(gp);
 
         eventRect = new EventRect[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
 
@@ -43,7 +46,15 @@ public class EventHandler {
             }
         }
 
+        setDialogues();
+    }
+    public  void  setDialogues(){
 
+        eventMaster.dialogues[0][0] = "Teleport!";
+        eventMaster.dialogues[1][0] = "You faill into a pit!";
+        eventMaster.dialogues[2][0] = "You drink the wather.\nYour life and mana have been recovered.\n" +
+                "(The progres has been saved)";
+        eventMaster.dialogues[1][1] = "Damn, this is good water";
     }
 
     public  void  checkEvent(){
@@ -106,7 +117,7 @@ public class EventHandler {
     }
     public  void  teleport(int gameState){
         gp.gameState = gameState;
-        gp.ui.currentdialogue = "Teleport!";
+        eventMaster.startDialogue(eventMaster,0);
         gp.player.worldX = gp.tileSize *37;
         gp.player.worldY = gp.tileSize *10;
 
@@ -115,7 +126,7 @@ public class EventHandler {
     public  void  damagePit( int gameState){
      gp.gameState = gameState;
      gp.playSE(6);
-     gp.ui.currentdialogue = "You faill into a pit!";
+     eventMaster.startDialogue(eventMaster,1);
      gp.player.life -= 1;
         canTouchEvent = false;
     }
@@ -126,8 +137,7 @@ public class EventHandler {
             gp.gameState = gameState;
             gp.player.attacCanceled = true;
             gp.playSE(2);
-            gp.ui.currentdialogue = "You drink the wather.\nYour life and mana have been recovered.\n" +
-                    "(The progres has been saved)";
+            eventMaster.startDialogue(eventMaster,2);
             gp.player.life = gp.player.maxLife;
             gp.player.mana = gp.player.maxMana;
             gp.aSetter.setMonster();

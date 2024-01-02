@@ -120,6 +120,7 @@ public class GamePanel extends JPanel implements  Runnable{
 
         player.setDefaultPostions();
         player.restoreStatus();
+        player.resetCounter();
         aSetter.setNPC();
         aSetter.setMonster();
 

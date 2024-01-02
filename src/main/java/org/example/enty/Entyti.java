@@ -20,7 +20,7 @@ public class Entyti {
     public Rectangle solidArea = new Rectangle(0, 0, 48 ,48);
     public  Rectangle attacArea = new Rectangle(0,0,0,0);
     public  int solidAreaDefaulX , solidAreaDefaultY;
-    public  String  dialogues[] = new String[20];
+    public  String  dialogues[][] = new String[20][20];
     public  Entyti attacker;
     public  boolean collision = false;
     public BufferedImage image ,image2, image3;
@@ -30,6 +30,7 @@ public class Entyti {
     public  int worldX, worldY;
     public  String directory = "down";
     public  int sprintNum =1;
+    public  int dialogueSet = 0;
     public  int dialogIndex = 0;
     public  boolean invicible = false;
     public  boolean collisionOn = false;
@@ -156,41 +157,42 @@ public class Entyti {
         int goalCol =(target.worldY + target.solidArea.y)/gp.tileSize;
         return goalCol;
     }
+    public  void  resetCounter(){
+         spritCounter =0;
+         actionLoockCounter = 0 ;
+         invicibleCounter = 0 ;
+         dyingCounter = 0;
+         hpBarCounter = 0;
+         shotAvaliableCounter = 0;
+         knockBackCounter = 0;
+         guardCounter = 0;
+         offBalanceCounter = 0;
+    }
     public  void  setLoot(Entyti loot){
 
     }
    public  void  setAction(){
     }
 
-    public  void  damageReaction(){
-
-    }
-    public  void  speak(){
-        if(dialogues[dialogIndex] == null){
-            dialogIndex = 0;
-        }
-        gp.ui.currentdialogue = dialogues[dialogIndex];
-        dialogIndex++;
-
+    public  void  damageReaction(){}
+    public  void  speak(){}
+    public  void  facePlayer(){
         switch (gp.player.directory){
-            case "up":
-                directory = "down";
-                break;
-            case "down":
-                directory ="up";
-                break;
-            case "left":
-                directory = "right";
-                break;
-            case "right":
-                directory = "left";
-                break;
+            case "up": directory = "down";break;
+            case "down": directory ="up";break;
+            case "left": directory = "right";break;
+            case "right": directory = "left";break;
         }
+    }
+    public  void  startDialogue(Entyti entyti, int setNum){
+
+        gp.gameState = gp.dialogusState;
+        gp.ui.npc = entyti;
+        dialogueSet = setNum;
 
     }
     public boolean  use(Entyti entyti ){
         return  false;
-
     }
     public  void  checkDrop (){}
     public  void  dropItem(Entyti dropedItem){

@@ -23,7 +23,7 @@ public class NPC_OldMan extends  Entyti{
         solidArea.width = 30;
         solidArea.height = 30;
 
-
+        dialogueSet = -1;
         getImage();
         setDialogues();
 
@@ -42,21 +42,23 @@ public class NPC_OldMan extends  Entyti{
     }
     public  void  setDialogues(){
 
-        dialogues[0] = "Hello lad";
-        dialogues[1] = "So you've come to this island to \nfind the reasure ?";
-        dialogues[2] = "I used to be a great warrior,but now.....\nI'm a bit too old for taking an adventure,";
-        dialogues[3] = "Be careful on the island,\nthere is danger at every step";
-        dialogues[4] = "But I see you are a very brave boy";
-        dialogues[5] = "Well, good luck on you.";
+        dialogues[0][0] = "Hello lad";
+        dialogues[0][1] = "So you've come to this island to \nfind the reasure ?";
+        dialogues[0][2] = "I used to be a great warrior,but now.....\nI'm a bit too old for taking an adventure,";
+        dialogues[0][3] = "Be careful on the island,\nthere is danger at every step";
+        dialogues[0][4] = "But I see you are a very brave boy";
+        dialogues[0][5] = "Well, good luck on you.";
+
+        dialogues[1][0] = "If you become tired, rest at the wather";
+        dialogues[1][1] = "However, the mpnsters reappear if you rest\nI dont't know why but that's how it works";
+        dialogues[1][2] = "In any case,don't push yourself too hard";
+
+        dialogues[2][0] ="I wonder how open that door..";
 
     }
 
-    //Good+
     public  void  setAction() {
        if(onPath == true){
-          /* int goalCol = 10 ;
-           int goalRow= 9 ;*/
-
            int goalCol =(gp.player.worldX + gp.player.solidArea.x)/gp.tileSize;
            int goalRow =(gp.player.worldY + gp.player.solidArea.y)/gp.tileSize;
 
@@ -86,11 +88,16 @@ public class NPC_OldMan extends  Entyti{
             }
         }
     }
-    //Good+
     public  void  speak(){
-        super.speak();
 
-        onPath = true;
+        facePlayer();
+        startDialogue(this,dialogueSet);
+        dialogueSet++;
+
+        if(dialogues[dialogueSet][0] == null){
+            dialogueSet -- ;
+        }
+
     }
 
 }

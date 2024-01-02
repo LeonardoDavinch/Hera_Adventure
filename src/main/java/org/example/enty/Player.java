@@ -72,16 +72,24 @@ public class Player extends  Entyti{
         getAttacImage();
         getGuardImage();
         setItems();
+        setDialogues();
     }
     public  void  setDefaultPostions(){
         worldX = gp.tileSize * 23;
         worldY = gp.tileSize * 21;
         directory = "down";
     }
+    public  void  setDialogues(){
+
+        dialogues[0][0] = "You are level " + level + " now!\n"
+                +"You feel stornger! ";
+
+    }
     public  void  restoreStatus(){
 
         life = maxLife;
         mana = maxMana;
+        speed = defauldSpeed;
         invicible = false;
         transparent = false;
         attacing = false;
@@ -368,11 +376,9 @@ public class Player extends  Entyti{
     }
     public  void  interactNPC(int i ){
 
-        if(gp.keyH.enterPressed == true){
-
             if(i !=999){
+                if(gp.keyH.enterPressed == true){
                      attacCanceled = true;
-                    gp.gameState = gp.dialogusState;
                     gp.npc[gp.currentMap][i].speak();
             }
         }
@@ -484,8 +490,7 @@ public class Player extends  Entyti{
 
             gp.playSE(8);
             gp.gameState = gp.dialogusState;
-            gp.ui.currentdialogue = "You are level " + level + " now!\n"
-        +"You feel stornger! ";
+            startDialogue(this,0);
         }
     }
     public  void  selectItem(){

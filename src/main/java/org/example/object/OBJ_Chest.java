@@ -30,30 +30,31 @@ GamePanel gp;
     }
     public  void  setLoot(Entyti loot){
         this.loot =loot;
+        setDialogues();
+    }
+    public  void  setDialogues(){
+    dialogues[0][0]="You open the chest and find a"+loot.name+"!"+"\n...But you can't carry any more!";
+    dialogues[1][0]="You open the chest and find a"+loot.name+"!"+"\nYou obtain the"+loot.name+"!";
+    dialogues[2][0]="It's empty";
     }
     public  void  interact(){
 
-        gp.gameState = gp.dialogusState;
 
         if(opened == false){
             gp.playSE(3);
 
-            StringBuilder sb = new StringBuilder();
-            sb.append("You open the chest and find a"+loot.name+"!");
 
             if(gp.player.canObtainItem(loot) == false){
-                sb.append("\n...But you can't carry any more!");
-
+                startDialogue(this,0);
             }
             else {
-                sb.append("\nYou obtain the"+loot.name+"!");
+               startDialogue(this,1);
                 down1 = image2;
                 opened = true;
             }
-            gp.ui.currentdialogue = sb.toString();
         }
         else {
-            gp.ui.currentdialogue = "It's empty";
+            startDialogue(this,2);
         }
 
     }

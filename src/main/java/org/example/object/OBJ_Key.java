@@ -19,22 +19,25 @@ public class OBJ_Key extends Entyti {
         description = "["+name+"]\nIts opens the door.";
         price = 100;
         stackbale = true;
-
+        setDialogues();
+    }
+    public  void  setDialogues(){
+        dialogues[0][0]="You use the "+ name +"an open the door";
+        dialogues[1][0] = "What are you doing?";
     }
     public  boolean  use(Entyti entyti){
 
-        gp.gameState = gp.dialogusState;
 
         int objIndex = getDetected(entyti,gp.obj,"Door");
 
         if(objIndex  != 999){
-            gp.ui.currentdialogue = "You use the "+ name +"an open the door";
+            startDialogue(this,0);
             gp.playSE(3);
             gp.obj[gp.currentMap][objIndex] = null;
             return  true;
         }
         else {
-            gp.ui.currentdialogue = "What are you doing?";
+            startDialogue(this,1);
             return  false;
         }
 

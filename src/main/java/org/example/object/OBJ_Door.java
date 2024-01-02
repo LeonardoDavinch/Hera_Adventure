@@ -22,11 +22,13 @@ public class OBJ_Door extends Entyti {
         solidArea.height = 32;
         solidAreaDefaulX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-
+        setDialogues();
+    }
+    public  void  setDialogues(){
+        dialogues[0][0] = "You need a key to open this";
     }
     public  void  interact(){
 
-        gp.gameState = gp.dialogusState;
-        gp.ui.currentdialogue = "You need a key to open this";
+   startDialogue(this,0);
     }
 }

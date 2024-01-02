@@ -54,7 +54,7 @@ public class EventHandler {
         eventMaster.dialogues[1][0] = "You faill into a pit!";
         eventMaster.dialogues[2][0] = "You drink the wather.\nYour life and mana have been recovered.\n" +
                 "(The progres has been saved)";
-        eventMaster.dialogues[1][1] = "Damn, this is good water";
+        eventMaster.dialogues[2][1] = "Damn, this is good water";
     }
 
     public  void  checkEvent(){

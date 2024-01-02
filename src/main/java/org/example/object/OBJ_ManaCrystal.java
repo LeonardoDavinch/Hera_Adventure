@@ -6,12 +6,13 @@ import org.example.enty.Entyti;
 public class OBJ_ManaCrystal  extends Entyti {
 
     GamePanel gp;
+    public  static final  String onjName ="Mana Crystal";
     public OBJ_ManaCrystal(GamePanel gp) {
         super(gp);
         this.gp=gp;
 
         type = type_pickupOnly;
-        name ="Mana Crystal";
+        name = onjName;
         value = 1;
         down1 = setup("/objects/manacrystal_full",gp.tileSize,gp.tileSize);
         image = setup("/objects/manacrystal_full",gp.tileSize,gp.tileSize);

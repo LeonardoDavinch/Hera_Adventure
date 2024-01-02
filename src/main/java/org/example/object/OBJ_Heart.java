@@ -8,12 +8,13 @@ import java.io.IOException;
 
 public class OBJ_Heart extends Entyti {
     GamePanel gp;
+    public  static final  String onjName ="Heart";
     public  OBJ_Heart(GamePanel gp){
         super(gp);
         this.gp = gp;
 
         type = type_pickupOnly;
-        name = "Heart";
+        name = onjName;
         value = 2;
         down1 = setup("/objects/heart_full",gp.tileSize,gp.tileSize);
         image = setup("/objects/heart_full",gp.tileSize,gp.tileSize);

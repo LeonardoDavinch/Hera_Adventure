@@ -203,7 +203,7 @@ public class Player extends  Entyti{
                 knockBack = false;
                 speed = defauldSpeed;
             }
-            else if (collisionOn == false) {
+            else if (collisionOn == false  ) {
                 switch (knockBackDirectory) {
                     case "up": worldY -= speed;break;
                     case "down":worldY += speed;break;
@@ -270,6 +270,8 @@ public class Player extends  Entyti{
                 gp.playSE(7);
                 attacing = true;
                 spritCounter = 0;
+
+                currentWeapon.durablility --;
             }
 
             attacCanceled = false;
@@ -490,6 +492,9 @@ public class Player extends  Entyti{
 
             gp.playSE(8);
             gp.gameState = gp.dialogusState;
+         /*   dialogues[0][0] = "You are level " + level + " now!\n"
+                    +"You feel stornger! ";*/
+            setDialogues();
             startDialogue(this,0);
         }
     }
@@ -552,9 +557,10 @@ public class Player extends  Entyti{
 
         boolean canObtain  = false;
 
+        Entyti newItem = gp.eGenerator.getObject(item.name);
         //check if stakeble
-        if(item.stackbale == true){
-            int index = searchItemInInventory(item.name);
+        if(newItem.stackbale == true){
+            int index = searchItemInInventory(newItem.name);
 
             if(index != 999){
                 inventory.get(index).amout++;
@@ -562,14 +568,14 @@ public class Player extends  Entyti{
             }
             else {
                 if(item.inventory.size() != maxInventorySize){
-                    inventory.add(item);
+                    inventory.add(newItem);
                     canObtain = true;
                 }
             }
         }
         else {
             if(item.inventory.size() != maxInventorySize){
-                inventory.add(item);
+                inventory.add(newItem);
                 canObtain = true;
             }
         }

@@ -4,12 +4,13 @@ import org.example.GamePanel;
 import org.example.enty.Entyti;
 
 public class OBJ_Axe extends Entyti {
+    public  static final  String onjName ="Fighter's Axe";
 
     public OBJ_Axe(GamePanel gp) {
         super(gp);
 
         type = type_axe;
-        name = "Woodcutter's Axe";
+        name = onjName;
         down1 = setup("/objects/axe",gp.tileSize,gp.tileSize);
         ataccValue = 2;
         attacArea.width = 30;

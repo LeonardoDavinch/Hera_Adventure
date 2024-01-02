@@ -4,12 +4,12 @@ import org.example.GamePanel;
 import org.example.enty.Entyti;
 
 public class OBJ_Sword_Normal extends Entyti {
-
+    public  static final  String onjName ="Normal Sword";
     public OBJ_Sword_Normal(GamePanel gp) {
         super(gp);
 
         type = type_sword;
-        name = "Normal Sword";
+        name = onjName;
         down1 =setup("/objects/sword_normal",gp.tileSize,gp.tileSize);
         ataccValue = 1;
         attacArea.width = 36;

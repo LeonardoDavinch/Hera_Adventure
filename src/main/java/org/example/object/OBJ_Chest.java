@@ -7,7 +7,7 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 
 public class OBJ_Chest extends Entyti {
-
+    public  static final  String onjName ="Chest";
 GamePanel gp;
 
     public  OBJ_Chest(GamePanel gp){
@@ -15,7 +15,7 @@ GamePanel gp;
         this.gp = gp;
 
         type = type_obstacle;
-        name = "Chest";
+        name = onjName;
         image = setup("/objects/chest",gp.tileSize,gp.tileSize);
         image2 = setup("/objects/chest_opened",gp.tileSize,gp.tileSize);
         down1 = image;

@@ -5,14 +5,14 @@ import org.example.enty.Entyti;
 
 public class OBJ_Potion_Red extends Entyti {
     GamePanel gp;
-
+    public  static final  String onjName ="Red Potion";
     public OBJ_Potion_Red(GamePanel gp) {
         super(gp);
 
         this.gp=gp;
 
         type =type_consumable;
-        name = "Red Potion";
+        name = onjName;
         value = 5;
         down1 = setup("/objects/potion_red",gp.tileSize,gp.tileSize);
         description = "[Red potion]\nHeals your life by"+value+".";

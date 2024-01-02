@@ -99,6 +99,7 @@ public class Entyti {
     public  boolean stackbale = false;
     public  int amout = 1;
     public  int lightRadius;
+    public  int durablility = 100;
 
 
 

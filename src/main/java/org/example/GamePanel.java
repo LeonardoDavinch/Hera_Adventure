@@ -3,6 +3,7 @@ package org.example;
 import org.example.Data.SaveLoad;
 import org.example.ai.PathFinder;
 import org.example.enty.Entyti;
+import org.example.enty.EntytiGenerator;
 import org.example.enty.Player;
 import org.example.enviroment.EnviromentManager;
 import org.example.tille_interactive.InteractiveTille;
@@ -58,6 +59,7 @@ public class GamePanel extends JPanel implements  Runnable{
     public  CollisionChecker oChecker = new CollisionChecker(this);
     public  AsserSetter aSetter = new AsserSetter(this);
     SaveLoad saveLoad =new SaveLoad(this);
+    public EntytiGenerator eGenerator = new EntytiGenerator(this);
 
     //Entitty object
     public Player player = new Player(this,keyH);

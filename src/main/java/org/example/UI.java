@@ -586,6 +586,7 @@ public class UI {
                     g2.drawString(line,textX,textY );
                     textY += 32;
                 }
+                g2.drawString("Durability:"+entyti.inventory.get(itemIndex).durablility,textX,textY+100);
 
             }
         }

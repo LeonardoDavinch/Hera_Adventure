@@ -6,12 +6,13 @@ import org.example.enty.Entyti;
 public class OBJ_Tent extends Entyti {
 
     GamePanel gp;
+    public  static final  String onjName ="Tent";
     public OBJ_Tent(GamePanel gp) {
         super(gp);
         this.gp = gp;
 
         type = type_consumable;
-        name = "Tent";
+        name = onjName;
         down1 = setup("/objects/tent",gp.tileSize,gp.tileSize);
         description = "[Tent]\nYou cal sleep until\nnext moring";
         price = 300;

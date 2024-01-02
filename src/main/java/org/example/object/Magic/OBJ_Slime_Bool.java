@@ -11,11 +11,12 @@ import java.util.TimerTask;
 public class OBJ_Slime_Bool extends Projectile {
 
     GamePanel gp;
+    public  static final  String onjName ="Slime Bool";
     public OBJ_Slime_Bool(GamePanel gp) {
         super(gp);
         this.gp = gp;
 
-        name = "Slime Bool";
+        name = onjName;
         speed = 4;
         maxLife = 80;
         life = maxLife;

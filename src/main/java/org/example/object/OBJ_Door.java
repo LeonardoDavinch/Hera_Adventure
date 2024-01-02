@@ -8,11 +8,12 @@ import java.io.IOException;
 
 public class OBJ_Door extends Entyti {
     GamePanel gp;
+    public  static final  String onjName ="Door";
     public  OBJ_Door(GamePanel gp){
         super(gp);
         this.gp = gp;
         type =type_obstacle;
-        name = "Door";
+        name = onjName;
         down1 = setup("/objects/door",gp.tileSize,gp.tileSize);
         collision = true;
 

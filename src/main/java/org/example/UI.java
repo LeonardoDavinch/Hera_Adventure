@@ -871,6 +871,7 @@ public class UI {
             gp.player.worldY = gp.tileSize * gp.eHandler.tempRow;
             gp.eHandler.previusEventX = gp.player.worldX;
             gp.eHandler.previusEventY = gp.player.worldY;
+            gp.changeArea();
         }
     }
     public  void  drawTradeScreen(){

@@ -67,11 +67,15 @@ public class EventHandler {
         }
 
         if(canTouchEvent == true){
-            if(hit(0,27,16,"right") == true){teleport(gp.dialogusState);}
-            else if (hit(0,23,12,"up") == true){healingPool(gp.dialogusState);}
-            else if(hit(0,10,39,"any") == true){teleportMap(1,12,13);}
-            else if(hit(1,12,13,"any") == true){teleportMap(0,10,39);}
+            if(hit(0,27,16,"right") == true){teleport(gp.dialogusState);}//teleport
+            else if (hit(0,23,12,"up") == true){healingPool(gp.dialogusState);}//heling poll
+            else if(hit(0,10,39,"any") == true){teleportMap(1,12,13,gp.indoor);}//to the merchast bos
+            else if(hit(1,12,13,"any") == true){teleportMap(0,10,39,gp.outside);}//to outside
             else if(hit(1,12,9,"up") == true){speak(gp.npc[1][0]);}
+            else if(hit(0,12,9,"any") == true){teleportMap(2,9,41,gp.dungeon);}//to the dungeon
+            else if(hit(2,9,41,"any") == true){teleportMap(0,12,9,gp.outside);}//to outside
+            else if(hit(2,8,7,"any") == true){teleportMap(3,26,41,gp.dungeon);}//to b2
+            else if(hit(3,26,41,"any") == true){teleportMap(2,8,7,gp.dungeon);}//to b1
         }
 
     }
@@ -104,9 +108,10 @@ public class EventHandler {
 
         return  hit;
     }
-    public  void  teleportMap(int map ,int col,int row){
+    public  void  teleportMap(int map ,int col,int row,int area){
 
             gp.gameState = gp.transitionState;
+            gp.nextArea  = area;
             tempMap = map;
             tempCol = col;
             tempRow = row;

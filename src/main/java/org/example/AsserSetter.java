@@ -3,6 +3,7 @@ package org.example;
 
 import org.example.Monsters.MON_GreanSlime;
 import org.example.Monsters.MON_Orc;
+import org.example.Monsters.MON_RedSlime;
 import org.example.enty.NPC_Merchant;
 import org.example.enty.NPC_OldMan;
 import org.example.object.*;
@@ -32,7 +33,7 @@ public class AsserSetter {
         gp.obj[mapNum][i].worldX = gp.tileSize * 19;
         gp.obj[mapNum][i].worldY = gp.tileSize * 20;
         i++;
-        gp.obj[mapNum][i] = new OBJ_Door(gp);
+     /*   gp.obj[mapNum][i] = new OBJ_Door(gp);
         gp.obj[mapNum][i].worldX = gp.tileSize * 14;
         gp.obj[mapNum][i].worldY = gp.tileSize * 28;
         i++;
@@ -43,7 +44,7 @@ public class AsserSetter {
         gp.obj[mapNum][i] = new OBJ_Door(gp);
         gp.obj[mapNum][i].worldX = gp.tileSize * 12;
         gp.obj[mapNum][i].worldY = gp.tileSize * 12;
-        i++;
+        i++;*/
         gp.obj[mapNum][i] = new OBJ_Chest(gp);
         gp.obj[mapNum][i].setLoot(new OBJ_Key(gp));
         gp.obj[mapNum][i].worldX = gp.tileSize * 30;
@@ -94,6 +95,18 @@ public class AsserSetter {
                 gp.monster[mapNum][i].worldX = gp.tileSize * 12;
                 gp.monster[mapNum][i].worldY = gp.tileSize * 33;
                 i++;
+        gp.monster[mapNum][i] = new MON_RedSlime(gp);
+        gp.monster[mapNum][i].worldX = gp.tileSize * 37;
+        gp.monster[mapNum][i].worldY = gp.tileSize * 9;
+        i++;
+        gp.monster[mapNum][i] = new MON_RedSlime(gp);
+        gp.monster[mapNum][i].worldX = gp.tileSize * 39;
+        gp.monster[mapNum][i].worldY = gp.tileSize * 9;
+        i++;
+        gp.monster[mapNum][i] = new MON_RedSlime(gp);
+        gp.monster[mapNum][i].worldX = gp.tileSize * 36;
+        gp.monster[mapNum][i].worldY = gp.tileSize * 7;
+        i++;
 
                 mapNum = 1;
 

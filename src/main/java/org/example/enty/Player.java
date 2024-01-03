@@ -3,7 +3,11 @@ package org.example.enty;
 import org.example.GamePanel;
 import org.example.KeyHandler;
 import org.example.Monsters.MON_GreanSlime;
+import org.example.Monsters.MON_Orc;
+import org.example.Monsters.MON_RedSlime;
+import org.example.object.Armor.OBJ_Pickaxe;
 import org.example.object.Magic.OBJ_Fireball;
+import org.example.object.OBJ_Axe;
 import org.example.object.OBJ_Key;
 import org.example.object.Armor.OBJ_Shield_Wood;
 import org.example.object.Armor.OBJ_Sword_Normal;
@@ -105,6 +109,9 @@ public class Player extends  Entyti{
         inventory.add(currentShiled);
         inventory.add(new OBJ_Key(gp));
         inventory.add(new OBJ_Potion_Red(gp));
+        inventory.add(new OBJ_Axe(gp));
+        inventory.add(new OBJ_Pickaxe(gp));
+
 
 
     }
@@ -177,6 +184,16 @@ public class Player extends  Entyti{
             attacLeft2 = setup("/player/Attacking sprites/boy_axe_left_2", gp.tileSize * 2, gp.tileSize);
             attacRight1 = setup("/player/Attacking sprites/boy_axe_right_1", gp.tileSize * 2, gp.tileSize);
             attacRight2 = setup("/player/Attacking sprites/boy_axe_right_2", gp.tileSize * 2, gp.tileSize);
+        }
+        if(currentWeapon.type == type_pickaxe) {
+            attacUp1 = setup("/player/Attacking sprites/boy_pick_up_1", gp.tileSize, gp.tileSize * 2);
+            attacUp2 = setup("/player/Attacking sprites/boy_pick_up_2", gp.tileSize, gp.tileSize * 2);
+            attacDown1 = setup("/player/Attacking sprites/boy_pick_down_1", gp.tileSize, gp.tileSize * 2);
+            attactDown2 = setup("/player/Attacking sprites/boy_pick_down_2", gp.tileSize, gp.tileSize * 2);
+            attacLeft1 = setup("/player/Attacking sprites/boy_pick_left_1", gp.tileSize * 2, gp.tileSize);
+            attacLeft2 = setup("/player/Attacking sprites/boy_pick_left_2", gp.tileSize * 2, gp.tileSize);
+            attacRight1 = setup("/player/Attacking sprites/boy_pick_right_1", gp.tileSize * 2, gp.tileSize);
+            attacRight2 = setup("/player/Attacking sprites/boy_pick_right_2", gp.tileSize * 2, gp.tileSize);
         }
     }
     public  void  getGuardImage(){
@@ -383,6 +400,8 @@ public class Player extends  Entyti{
                      attacCanceled = true;
                     gp.npc[gp.currentMap][i].speak();
             }
+
+                gp.npc[gp.currentMap][i].move(directory);
         }
     }
     public  void  contactMonster(int i){
@@ -466,6 +485,8 @@ public class Player extends  Entyti{
             generateParticle(gp.iTile[gp.currentMap][i],gp.iTile[gp.currentMap][i]);
 
             if(gp.iTile[gp.currentMap][i].life == 0 ) {
+                //gp.iTile[gp.currentMap][i].checkDrop();
+
                 gp.iTile[gp.currentMap][i] = gp.iTile[gp.currentMap][i].getDestroyedFrom();
             }
         }
@@ -506,7 +527,7 @@ public class Player extends  Entyti{
 
             Entyti selectItem = inventory.get(itemIndex);
 
-            if(selectItem.type == type_sword || selectItem.type == type_axe){
+            if(selectItem.type == type_sword || selectItem.type == type_axe || selectItem.type == type_pickaxe){
 
                 currentWeapon =selectItem;
                 attack = getAttack();

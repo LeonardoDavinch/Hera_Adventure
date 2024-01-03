@@ -588,6 +588,10 @@ public class UI {
                 }
                 g2.drawString("Durability:"+entyti.inventory.get(itemIndex).durablility,textX,textY+100);
 
+               if(entyti.inventory.get(itemIndex).durablility == 0){
+                   gp.player.inventory.remove(itemIndex);
+               }
+
             }
         }
 

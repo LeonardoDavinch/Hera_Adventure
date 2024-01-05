@@ -67,7 +67,7 @@ public class MON_GreanSlime extends Entyti {
 
             checkStartChasingOrNot(gp.player,5,100);
             //go monster random moved
-            getRandomDirection();
+            getRandomDirection(120);
         }
     }
     public  void  damageReaction(){

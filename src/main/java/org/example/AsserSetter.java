@@ -1,9 +1,7 @@
 package org.example;
 
 
-import org.example.Monsters.MON_GreanSlime;
-import org.example.Monsters.MON_Orc;
-import org.example.Monsters.MON_RedSlime;
+import org.example.Monsters.*;
 import org.example.enty.NPC_BigRock;
 import org.example.enty.NPC_Merchant;
 import org.example.enty.NPC_OldMan;
@@ -118,9 +116,13 @@ public class AsserSetter {
         gp.npc[mapNum][i].worldX = gp.tileSize * 23;
         gp.npc[mapNum][i].worldY = gp.tileSize * 14;
         i++;
+        gp.npc[mapNum][i] = new NPC_BigRock(gp);
+        gp.npc[mapNum][i].worldX = gp.tileSize * 38;
+        gp.npc[mapNum][i].worldY = gp.tileSize * 26;
+        i++;
     }
     public  void  setMonster(){
-        int mapNum = 0;
+                int mapNum = 0;
                 int i = 0;
                 gp.monster[mapNum][i] = new MON_GreanSlime(gp);
                 gp.monster[mapNum][i].worldX = gp.tileSize * 22;
@@ -142,20 +144,49 @@ public class AsserSetter {
                 gp.monster[mapNum][i].worldX = gp.tileSize * 12;
                 gp.monster[mapNum][i].worldY = gp.tileSize * 33;
                 i++;
-        gp.monster[mapNum][i] = new MON_RedSlime(gp);
-        gp.monster[mapNum][i].worldX = gp.tileSize * 37;
-        gp.monster[mapNum][i].worldY = gp.tileSize * 9;
-        i++;
-        gp.monster[mapNum][i] = new MON_RedSlime(gp);
-        gp.monster[mapNum][i].worldX = gp.tileSize * 39;
-        gp.monster[mapNum][i].worldY = gp.tileSize * 9;
-        i++;
-        gp.monster[mapNum][i] = new MON_RedSlime(gp);
-        gp.monster[mapNum][i].worldX = gp.tileSize * 36;
-        gp.monster[mapNum][i].worldY = gp.tileSize * 7;
-        i++;
+                gp.monster[mapNum][i] = new MON_RedSlime(gp);
+                gp.monster[mapNum][i].worldX = gp.tileSize * 37;
+                gp.monster[mapNum][i].worldY = gp.tileSize * 9;
+                i++;
+                gp.monster[mapNum][i] = new MON_RedSlime(gp);
+                gp.monster[mapNum][i].worldX = gp.tileSize * 39;
+                gp.monster[mapNum][i].worldY = gp.tileSize * 9;
+                i++;
+                gp.monster[mapNum][i] = new MON_RedSlime(gp);
+                gp.monster[mapNum][i].worldX = gp.tileSize * 36;
+                gp.monster[mapNum][i].worldY = gp.tileSize * 7;
+                i++;
 
-                mapNum = 1;
+                mapNum = 2;
+                i++;
+                gp.monster[mapNum][i] = new MON_Bat(gp);
+                gp.monster[mapNum][i].worldX = gp.tileSize * 34;
+                gp.monster[mapNum][i].worldY = gp.tileSize * 39;
+                i++;
+                gp.monster[mapNum][i] = new MON_Bat(gp);
+                gp.monster[mapNum][i].worldX = gp.tileSize * 36;
+                gp.monster[mapNum][i].worldY = gp.tileSize * 25;
+                i++;
+                gp.monster[mapNum][i] = new MON_Bat(gp);
+                gp.monster[mapNum][i].worldX = gp.tileSize * 39;
+                gp.monster[mapNum][i].worldY = gp.tileSize * 26;
+                i++;
+                gp.monster[mapNum][i] = new MON_Bat(gp);
+                gp.monster[mapNum][i].worldX = gp.tileSize * 28;
+                gp.monster[mapNum][i].worldY = gp.tileSize * 11;
+                i++;
+                gp.monster[mapNum][i] = new MON_Bat(gp);
+                gp.monster[mapNum][i].worldX = gp.tileSize * 10;
+                gp.monster[mapNum][i].worldY = gp.tileSize * 19;
+
+                mapNum = 3;
+                i++;
+                gp.monster[mapNum][i] = new MON_SkeletonLord(gp);
+                gp.monster[mapNum][i].worldX = gp.tileSize * 23;
+                gp.monster[mapNum][i].worldY = gp.tileSize * 16;
+                i++;
+
+
 
     }
     public  void  setInteractiveTile(){

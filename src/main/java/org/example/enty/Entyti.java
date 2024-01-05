@@ -47,6 +47,8 @@ public class Entyti {
     public  boolean offBalance = false;
    public  Entyti loot;
     public boolean opened = false;
+    public  boolean inRage = false;
+
 
 
 
@@ -140,12 +142,20 @@ public class Entyti {
     public  int getRow(){
         return (worldY + solidArea.y) / gp.tileSize;
     }
+    public  int getCenterX(){
+        int centerX = worldX + left1.getWidth()/2;
+        return  centerX;
+    }
+    public  int getCenterY(){
+        int centerY = worldY + up1.getHeight()/2;
+        return  centerY;
+    }
     public  int getXdistance(Entyti target){
-        int xDistance = Math.abs(worldX - target.worldX);
+        int xDistance = Math.abs(getCenterX() - target.getCenterX());
         return  xDistance;
     }
     public  int getYdistance(Entyti target){
-        int yDistance = Math.abs(worldY - target.worldY);
+        int yDistance = Math.abs(getCenterY() - target.getCenterY());
         return  yDistance;
     }
     public  int getTileDistance(Entyti target){
@@ -160,6 +170,7 @@ public class Entyti {
         int goalCol =(target.worldY + target.solidArea.y)/gp.tileSize;
         return goalCol;
     }
+
     public  void  resetCounter(){
          spritCounter =0;
          actionLoockCounter = 0 ;
@@ -347,22 +358,22 @@ public class Entyti {
 
         switch (directory){
             case "up":
-                if(gp.player.worldY < worldY && yDis < straight && xDis < holizontal){
+                if(gp.player.getCenterY() < getCenterY() && yDis < straight && xDis < holizontal){
                     targetInRage = true;
                 }
                 break;
             case "down":
-                if(gp.player.worldY > worldY && yDis < straight && xDis < holizontal){
+                if(gp.player.getCenterY() > getCenterY() && yDis < straight && xDis < holizontal){
                     targetInRage = true;
                 }
                 break;
             case "left":
-                if(gp.player.worldX < worldX && xDis < straight && yDis < holizontal){
+                if(gp.player.getCenterX() < getCenterX() && xDis < straight && yDis < holizontal){
                     targetInRage = true;
                 }
                 break;
             case "roght":
-                if(gp.player.worldX > worldX && xDis < straight && yDis < holizontal){
+                if(gp.player.getCenterX() > getCenterX() && xDis < straight && yDis < holizontal){
                     targetInRage = true;
                 }
                 break;
@@ -395,11 +406,36 @@ public class Entyti {
             shotAvaliableCounter = 0;
         }
     }
-
-    public  void  getRandomDirection(){
+    public  void  moveTowardPlayer (int interval){
         actionLoockCounter++;
 
-        if (actionLoockCounter == 120) {
+        if (actionLoockCounter > interval) {
+
+            if(getXdistance(gp.player) > getYdistance(gp.player)){
+                if(gp.player.getCenterX() < getCenterX()){
+                    directory = "left";
+                }
+                else {
+                    directory = "right";
+                }
+
+            }
+            else if (getXdistance(gp.player) < getYdistance(gp.player)) {
+                if(gp.player.getCenterY() < getCenterY()){
+                    directory = "up";
+                }
+                else {
+                    directory = "down";
+                }
+            }
+            actionLoockCounter = 0;
+        }
+    }
+
+    public  void  getRandomDirection(int interval){
+        actionLoockCounter++;
+
+        if (actionLoockCounter > interval) {
             Random random = new Random();
             int i = random.nextInt(100) + 1;
 
@@ -554,14 +590,15 @@ public class Entyti {
     }
 
 
+
     public  void  draw(Graphics2D g2){
         BufferedImage image = null;
         int screenX =worldX - gp.player.worldX +gp.player.screenX;
         int screenY = worldY -gp.player.worldY +gp.player.screenY;
 
-        if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX
+        if(worldX + gp.tileSize *5> gp.player.worldX - gp.player.screenX
                 && worldX - gp.tileSize < gp.player.worldX + gp.player.screenX
-                && worldY + gp.tileSize > gp.player.worldY - gp.player.screenY
+                && worldY + gp.tileSize * 5  > gp.player.worldY - gp.player.screenY
                 && worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
 
             int tempScreenX = screenX;
@@ -574,7 +611,7 @@ public class Entyti {
                         if(sprintNum == 2){image = up2;}
                     }
                     if(attacing == true){
-                        tempScreenY = screenY - gp.tileSize;
+                        tempScreenY = screenY - up1.getWidth();
                         if(sprintNum == 1) {image = attacUp1;}
                         if(sprintNum == 2){image = attacUp2;}
                     }
@@ -595,7 +632,7 @@ public class Entyti {
                         if (sprintNum == 2){image = left2;}
                     }
                     if(attacing == true){
-                        tempScreenX = screenX - gp.tileSize;
+                        tempScreenX = screenX - left1.getWidth();
                         if(sprintNum == 1) {image = attacLeft1;}
                         if (sprintNum == 2){image = attacLeft2;}
                     }

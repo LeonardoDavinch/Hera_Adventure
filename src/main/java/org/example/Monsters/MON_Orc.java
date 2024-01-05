@@ -79,7 +79,7 @@ public class MON_Orc  extends Entyti {
 
             checkStartChasingOrNot(gp.player,5,100);
             //go monster random moved
-            getRandomDirection();
+            getRandomDirection(120);
         }
         if(attacing == false){
             checkAttacOrNot(30,gp.tileSize*4,gp.tileSize);

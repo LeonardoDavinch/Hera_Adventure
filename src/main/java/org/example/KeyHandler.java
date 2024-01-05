@@ -8,6 +8,7 @@ public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, shotKeyPressed,spacePressed;
     public boolean showDebagText = false;
+    public  boolean godModeON = false;
 
     public KeyHandler(GamePanel gp) {
         this.gp = gp;
@@ -151,6 +152,7 @@ public class KeyHandler implements KeyListener {
                 showDebagText = false;
             }
         }
+
         if (code == KeyEvent.VK_R) {
             switch (gp.currentMap) {
                 case 0:
@@ -161,6 +163,14 @@ public class KeyHandler implements KeyListener {
                     break;
             }
 
+        }
+        //god game
+        if (code == KeyEvent.VK_G) {
+            if (godModeON == false) {
+                godModeON = true;
+            } else if (godModeON == true) {
+                godModeON = false;
+            }
         }
     }
     public  void  mapState(int code){

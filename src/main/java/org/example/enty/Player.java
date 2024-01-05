@@ -51,6 +51,8 @@ public class Player extends  Entyti{
         worldY = gp.tileSize * 21;
 
 
+
+
         defauldSpeed = 4;
         speed = defauldSpeed;
         directory = "down";

@@ -88,6 +88,7 @@ public class Entyti {
     public  Entyti currentShiled;
     public  Entyti currentLight;
     public  Projectile projectile ;
+    public  boolean boss;
 
     //Items atributes
     public ArrayList<Entyti> inventory = new ArrayList<>();
@@ -124,6 +125,14 @@ public class Entyti {
         this.gp=gp;
     }
 
+    public  int getScreenX(){
+        int screenX = worldX - gp.player.worldX +gp.player.screenX;
+        return  screenX;
+    }
+    public  int getScreenY(){
+        int screenY = worldY - gp.player.worldY +gp.player.screenY;
+        return  screenY;
+    }
     public  int getLeftX(){
         return  worldX + solidArea.x;
     }
@@ -588,21 +597,25 @@ public class Entyti {
         target.knockBack = true;
 
     }
-
-
-
-    public  void  draw(Graphics2D g2){
-        BufferedImage image = null;
-        int screenX =worldX - gp.player.worldX +gp.player.screenX;
-        int screenY = worldY -gp.player.worldY +gp.player.screenY;
+    public  boolean inCamera(){
+        boolean inCamere = false;
 
         if(worldX + gp.tileSize *5> gp.player.worldX - gp.player.screenX
                 && worldX - gp.tileSize < gp.player.worldX + gp.player.screenX
                 && worldY + gp.tileSize * 5  > gp.player.worldY - gp.player.screenY
-                && worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
+                && worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+            inCamere = true;
+        }
+        return  inCamere;
+    }
 
-            int tempScreenX = screenX;
-            int tempScreenY = screenY;
+    public  void  draw(Graphics2D g2){
+        BufferedImage image = null;
+
+            if(inCamera() == true){
+
+            int tempScreenX = getScreenX();
+            int tempScreenY = getScreenY();
 
             switch (directory) {
                 case "up":
@@ -611,7 +624,7 @@ public class Entyti {
                         if(sprintNum == 2){image = up2;}
                     }
                     if(attacing == true){
-                        tempScreenY = screenY - up1.getWidth();
+                        tempScreenY = getScreenY() - up1.getWidth();
                         if(sprintNum == 1) {image = attacUp1;}
                         if(sprintNum == 2){image = attacUp2;}
                     }
@@ -632,7 +645,7 @@ public class Entyti {
                         if (sprintNum == 2){image = left2;}
                     }
                     if(attacing == true){
-                        tempScreenX = screenX - left1.getWidth();
+                        tempScreenX = getScreenX() - left1.getWidth();
                         if(sprintNum == 1) {image = attacLeft1;}
                         if (sprintNum == 2){image = attacLeft2;}
                     }
@@ -648,24 +661,6 @@ public class Entyti {
                     }
                     break;
             }
-            //Monster hp bar
-            if(type == 2 && hpBarOn == true){
-                double onScale = (double)gp.tileSize/maxLife;
-                double hpBarValue =onScale *life;
-
-                g2.setColor(new Color(69, 75, 98));
-                g2.fillRect(screenX-1,screenY-16,gp.tileSize+2,12);
-
-                g2.setColor(new Color(220, 15, 15));
-                g2.fillRect(screenX,screenY - 15,(int) hpBarValue,10);
-
-                hpBarCounter ++;
-                if(hpBarCounter > 600){
-                    hpBarCounter = 0;
-                    hpBarOn = false;
-                }
-            }
-
 
             if(invicible == true){
                 hpBarOn = true;

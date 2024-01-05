@@ -83,6 +83,7 @@ public class UI {
         //Play state
         if(gp.gameState == gp.PlayState){
                  drawPlayerLife();
+                 drawMonsterLife();
                  drawMesage();
         }
         //pause state
@@ -126,17 +127,25 @@ public class UI {
 
     public  void  drawPlayerLife(){
 
-        int x = gp.tileSize /2 ;
+        int x = gp.tileSize /2;
         int y = gp.tileSize /2;
         int i = 0;
+        int iconSize = 32;
+        int manaStartX = (gp.tileSize/2)-5;
+        int manaStartY =0;
 
         //Draw max hearth
         while (i < gp.player.maxLife/2){
-            g2.drawImage(heart_blank,x,y,null);
+            g2.drawImage(heart_blank,x,y,iconSize,iconSize,null);
             i++;
-            x += gp.tileSize;
-        }
+            x += iconSize;
+            manaStartY = y + 32;
 
+            if( i % 8 == 0){
+                x = gp.tileSize/2;
+                y+=iconSize;
+            }
+        }
         //Reset
         x = gp.tileSize/2;
         y = gp.tileSize/2;
@@ -144,36 +153,94 @@ public class UI {
 
         //Draw current Life
         while (i < gp.player.life){
-            g2.drawImage(heart_half,x,y,null);
+            g2.drawImage(heart_half,x,y,iconSize,iconSize,null);
             i++;
             if (i < gp.player.life){
-                g2.drawImage(heart_full,x,y,null);
+                g2.drawImage(heart_full,x,y,iconSize,iconSize,null);
             }
             i++;
-            x += gp.tileSize;
+            x += iconSize;
         }
 
         //draw max mana
-        x = (gp.tileSize/2)-5;
-        y = (int) (gp.tileSize * 1.5);
+        x = manaStartX;
+        y = manaStartY;
         i = 0;
         while (i < gp.player.maxMana){
-            g2.drawImage(crystal_blanck,x,y,null);
+            g2.drawImage(crystal_blanck,x,y,iconSize,iconSize,null);
             i++;
-            x +=35;
+            x += 20;
+
+            if(i % 10 == 0){
+                x = manaStartX;
+                y +=iconSize;
+            }
 
         }
         //draw mana
-        x = (gp.tileSize/2)-5;
-        y = (int) (gp.tileSize * 1.5);
+        x = manaStartX;
+        y = manaStartY;
         i = 0;
         while (i < gp.player.mana){
-            g2.drawImage(crystal_full,x,y,null);
+            g2.drawImage(crystal_full,x,y,iconSize,iconSize,null);
             i++;
-            x += 35;
+            x += 20;
+
+            if( i % 10 == 0){
+                x =manaStartX;
+                y +=iconSize;
+            }
 
         }
 
+    }
+    public  void  drawMonsterLife(){
+
+        for (int i = 0; i < gp.monster[1].length; i++) {
+
+            Entyti monster  = gp.monster[gp.currentMap][i];
+
+            if(monster != null && monster.inCamera() == true){
+
+                //Monster hp bar
+                if(monster.hpBarOn == true && monster.boss == false){
+
+                    double onScale = (double)gp.tileSize/monster.maxLife;
+                    double hpBarValue =onScale * monster.life;
+
+                    g2.setColor(new Color(69, 75, 98));
+                    g2.fillRect(monster.getScreenX()-1,monster.getScreenY()-16,gp.tileSize+2,12);
+
+                    g2.setColor(new Color(220, 15, 15));
+                    g2.fillRect(monster.getScreenX(),monster.getScreenY() - 15,(int) hpBarValue,10);
+
+                    monster.hpBarCounter ++;
+
+                    if(monster.hpBarCounter > 600){
+                        monster.hpBarCounter = 0;
+                        monster.hpBarOn = false;
+                    }
+                }
+                else if(monster.boss == true){
+
+                    double onScale = (double)gp.tileSize * 8 /monster.maxLife;
+                    double hpBarValue =onScale * monster.life;
+
+                    int x  = gp.screenWidh/2 - gp.tileSize*4;
+                    int y = gp.tileSize*10;
+
+                    g2.setColor(new Color(35, 35, 35));
+                    g2.fillRect(x-1,y-1,gp.tileSize* 8 + 2,22);
+
+                    g2.setColor(new Color(255, 0, 30));
+                    g2.fillRect(x,y,(int) hpBarValue, 20);
+
+                    g2.setFont(g2.getFont().deriveFont(Font.BOLD,24f));
+                    g2.setColor(Color.white);
+                    g2.drawString(monster.name,x + 4,y - 10);
+                }
+            }
+        }
     }
 
     public  void  drawMesage(){

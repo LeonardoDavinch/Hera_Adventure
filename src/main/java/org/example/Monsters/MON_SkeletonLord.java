@@ -16,6 +16,7 @@ public class MON_SkeletonLord extends Entyti {
         this.gp=gp;
 
         type = type_monsters;
+        boss = true;
         name = monName;
         defauldSpeed = 1;
         speed = defauldSpeed;

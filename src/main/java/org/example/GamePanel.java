@@ -329,6 +329,7 @@ public class GamePanel extends JPanel implements  Runnable{
 
             //Mini map
             map.drawMiniMap(g2);
+
             //Ui
             ui.draw(g2);
         }

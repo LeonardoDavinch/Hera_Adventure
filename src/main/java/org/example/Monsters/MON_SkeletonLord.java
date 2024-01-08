@@ -1,8 +1,10 @@
 package org.example.Monsters;
 
+import org.example.Data.Progress;
 import org.example.GamePanel;
 import org.example.enty.Entyti;
 import org.example.object.Currency.OBJ_Coin_Bronze;
+import org.example.object.OBJ_Door_Iron;
 import org.example.object.OBJ_Heart;
 import org.example.object.OBJ_ManaCrystal;
 
@@ -26,6 +28,7 @@ public class MON_SkeletonLord extends Entyti {
         defense = 2;
         exp = 50;
         knockBackPower =5;
+        sleep = true;
 
         int size = gp.tileSize*5;
         solidArea.x = 48;
@@ -42,7 +45,7 @@ public class MON_SkeletonLord extends Entyti {
 
         getImage();
         getAtaccImage();
-
+        setDialogue();
     }
 
     public  void  getImage(){
@@ -68,7 +71,12 @@ public class MON_SkeletonLord extends Entyti {
             right1 = setup("/monster/skeletonlord_phase2_right_1",gp.tileSize*i,gp.tileSize*i);
             right2 = setup("/monster/skeletonlord_phase2_right_2",gp.tileSize*i,gp.tileSize*i);
         }
+    }
+    public  void  setDialogue(){
 
+        dialogues[0][0] = "No one can steal my treasure!";
+        dialogues[0][1] = "You will die here!";
+        dialogues[0][2] = "WELCOME TO YOUR DOOM!";
 
     }
     public  void  getAtaccImage(){
@@ -121,6 +129,21 @@ public class MON_SkeletonLord extends Entyti {
         actionLoockCounter = 0;
     }
     public  void  checkDrop(){
+
+        gp.bossBatleOn = true;
+        Progress.skeletonLordDefeated = true;
+
+        gp.stopMusic();
+        gp.playSE(19);
+
+        for (int i = 0; i < gp.obj[1].length; i++) {
+
+            if(gp.obj[gp.currentMap][i] != null && gp.obj[gp.currentMap][i].name.equals(OBJ_Door_Iron.onjName)){
+                gp.playSE(21);
+                gp.obj[gp.currentMap][i] = null;
+            }
+        }
+
         int i = new Random().nextInt(100) + 1 ;
 
         if( i < 50 ){

@@ -1,4 +1,5 @@
 package org.example;
+import org.example.Data.Progress;
 import org.example.enty.Entyti;
 
 import  java.awt.*;
@@ -76,6 +77,7 @@ public class EventHandler {
             else if(hit(2,9,41,"any") == true){teleportMap(0,12,9,gp.outside);}//to outside
             else if(hit(2,8,7,"any") == true){teleportMap(3,26,41,gp.dungeon);}//to b2
             else if(hit(3,26,41,"any") == true){teleportMap(2,8,7,gp.dungeon);}//to b1
+            else if(hit(3,25,27,"any" ) == true){skeletonLord();}
         }
 
     }
@@ -155,6 +157,13 @@ public class EventHandler {
             gp.gameState = gp.dialogusState;
             gp.player.attacCanceled = true;
             entyti.speak();
+        }
+    }
+    public  void  skeletonLord(){
+
+        if(gp.bossBatleOn == false && Progress.skeletonLordDefeated == false){
+            gp.gameState = gp.cutsceneState;
+            gp.csManager.sceneNum = gp.csManager.skeletonLord;
         }
     }
 }

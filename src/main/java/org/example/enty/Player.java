@@ -46,9 +46,15 @@ public class Player extends  Entyti{
     }
 
     public  void  setDefaultVale(){
-
+/*
         worldX = gp.tileSize * 23;
-        worldY = gp.tileSize * 21;
+        worldY = gp.tileSize * 21;*/
+
+        //Dungeon b2
+        gp.currentMap = 3;
+        worldX = gp.tileSize * 25;
+        worldY = gp.tileSize * 29;
+
 
 
 
@@ -676,7 +682,9 @@ public class Player extends  Entyti{
         if(transparent == true){
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.3f));
         }
-       g2.drawImage(image,tempScreenX,tempScreenY,null);
+        if(drawing == true){
+            g2.drawImage(image,tempScreenX,tempScreenY,null);
+        }
 
         //Reset alpha
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1f));

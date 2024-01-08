@@ -23,6 +23,7 @@ public class Entyti {
     public  String  dialogues[][] = new String[20][20];
     public  Entyti attacker;
     public  Entyti linkedEntyti;
+    public  boolean temp = false;
     public  boolean collision = false;
     public BufferedImage image ,image2, image3;
 
@@ -48,6 +49,8 @@ public class Entyti {
    public  Entyti loot;
     public boolean opened = false;
     public  boolean inRage = false;
+    public  boolean sleep = false;
+    public  boolean drawing = true;
 
 
 
@@ -282,82 +285,86 @@ public class Entyti {
     }
     public  void  update(){
 
-        if(knockBack == true) {
-            checkColision();
+        if(sleep == false){
+            if(knockBack == true) {
+                checkColision();
 
-            if (collisionOn == true) {
-                knockBackCounter = 0;
-                knockBack = false;
-                speed = defauldSpeed;
-            } else if (collisionOn == false) {
-                switch (knockBackDirectory) {
-                    case "up":
-                        worldY -= speed;
-                        break;
-                    case "down":
-                        worldY += speed;
-                        break;
-                    case "left":
-                        worldX -= speed;
-                        break;
-                    case "right":
-                        worldX += speed;
-                        break;
+                if (collisionOn == true) {
+                    knockBackCounter = 0;
+                    knockBack = false;
+                    speed = defauldSpeed;
+                } else if (collisionOn == false) {
+                    switch (knockBackDirectory) {
+                        case "up":
+                            worldY -= speed;
+                            break;
+                        case "down":
+                            worldY += speed;
+                            break;
+                        case "left":
+                            worldX -= speed;
+                            break;
+                        case "right":
+                            worldX += speed;
+                            break;
+                    }
+                }
+                knockBackCounter++;
+                if (knockBackCounter == 10) {
+                    knockBackCounter = 0;
+                    knockBack = false;
+                    speed = defauldSpeed;
                 }
             }
-            knockBackCounter++;
-            if (knockBackCounter == 10) {
-                knockBackCounter = 0;
-                knockBack = false;
-                speed = defauldSpeed;
-            }
-        }
 
-        else if (attacing == true) {
+            else if (attacing == true) {
                 attacing();
-        } else {
-            setAction();
-            checkColision();
+            } else {
+                setAction();
+                checkColision();
 
-            //if colision is false. plater can move
-            if(collisionOn == false){
-                switch (directory ){
-                    case "up": worldY -= speed;break;
-                    case "down": worldY += speed;break;
-                    case "left": worldX -= speed;break;
-                    case "right": worldX += speed;break;
+                //if colision is false. plater can move
+                if(collisionOn == false){
+                    switch (directory ){
+                        case "up": worldY -= speed;break;
+                        case "down": worldY += speed;break;
+                        case "left": worldX -= speed;break;
+                        case "right": worldX += speed;break;
+                    }
+                }
+                spritCounter++;
+                if (spritCounter > 24) {
+                    if (sprintNum == 1) {
+                        sprintNum = 2;
+                    } else if (sprintNum == 2) {
+                        sprintNum = 1;
+                    }
+                    spritCounter = 0;
+                }
+
+            }
+
+            if(invicible == true){
+                invicibleCounter ++;
+                if(invicibleCounter > 40 ){
+                    invicible = false;
+                    invicibleCounter = 0;
                 }
             }
-            spritCounter++;
-            if (spritCounter > 24) {
-                if (sprintNum == 1) {
-                    sprintNum = 2;
-                } else if (sprintNum == 2) {
-                    sprintNum = 1;
+            if(shotAvaliableCounter < 30) {
+                shotAvaliableCounter++;
+            }
+            if(offBalance == true){
+                offBalanceCounter++;
+                if(offBalanceCounter > 60){
+                    offBalance = false;
+                    offBalanceCounter = 0;
+
                 }
-                spritCounter = 0;
-            }
-
-        }
-
-        if(invicible == true){
-            invicibleCounter ++;
-            if(invicibleCounter > 40 ){
-                invicible = false;
-                invicibleCounter = 0;
             }
         }
-        if(shotAvaliableCounter < 30) {
-            shotAvaliableCounter++;
-        }
-        if(offBalance == true){
-            offBalanceCounter++;
-            if(offBalanceCounter > 60){
-                offBalance = false;
-                offBalanceCounter = 0;
 
-            }
-        }
+
     }
     public  void  checkAttacOrNot(int rate,int straight,int holizontal ){
 

@@ -46,14 +46,13 @@ public class Player extends  Entyti{
     }
 
     public  void  setDefaultVale(){
-/*
         worldX = gp.tileSize * 23;
-        worldY = gp.tileSize * 21;*/
+        worldY = gp.tileSize * 21;
 
-        //Dungeon b2
+    /*    //Dungeon b2
         gp.currentMap = 3;
         worldX = gp.tileSize * 25;
-        worldY = gp.tileSize * 14;
+        worldY = gp.tileSize * 14;*/
 
         defauldSpeed = 4;
         speed = defauldSpeed;

@@ -1,6 +1,7 @@
 package org.example;
 
 
+import org.example.Data.Progress;
 import org.example.Monsters.*;
 import org.example.enty.NPC_BigRock;
 import org.example.enty.NPC_Merchant;
@@ -35,7 +36,7 @@ public class AsserSetter {
         gp.obj[mapNum][i].worldX = gp.tileSize * 19;
         gp.obj[mapNum][i].worldY = gp.tileSize * 20;
         i++;
-     /*   gp.obj[mapNum][i] = new OBJ_Door(gp);
+        gp.obj[mapNum][i] = new OBJ_Door(gp);
         gp.obj[mapNum][i].worldX = gp.tileSize * 14;
         gp.obj[mapNum][i].worldY = gp.tileSize * 28;
         i++;
@@ -46,7 +47,7 @@ public class AsserSetter {
         gp.obj[mapNum][i] = new OBJ_Door(gp);
         gp.obj[mapNum][i].worldX = gp.tileSize * 12;
         gp.obj[mapNum][i].worldY = gp.tileSize * 12;
-        i++;*/
+        i++;
         gp.obj[mapNum][i] = new OBJ_Chest(gp);
         gp.obj[mapNum][i].setLoot(new OBJ_Key(gp));
         gp.obj[mapNum][i].worldX = gp.tileSize * 30;
@@ -87,6 +88,10 @@ public class AsserSetter {
         gp.obj[mapNum][i].setLoot(new OBJ_Potion_Red(gp));
         gp.obj[mapNum][i].worldX = gp.tileSize * 25;
         gp.obj[mapNum][i].worldY = gp.tileSize * 15;
+        i++;
+        gp.obj[mapNum][i] = new OBJ_BlueHeart(gp);
+        gp.obj[mapNum][i].worldX = gp.tileSize * 25;
+        gp.obj[mapNum][i].worldY = gp.tileSize * 8;
         i++;
 
 
@@ -189,10 +194,13 @@ public class AsserSetter {
 
                 mapNum = 3;
                 i++;
-                gp.monster[mapNum][i] = new MON_SkeletonLord(gp);
-                gp.monster[mapNum][i].worldX = gp.tileSize * 23;
-                gp.monster[mapNum][i].worldY = gp.tileSize * 16;
-                i++;
+                if(Progress.skeletonLordDefeated == false){
+                    gp.monster[mapNum][i] = new MON_SkeletonLord(gp);
+                    gp.monster[mapNum][i].worldX = gp.tileSize * 23;
+                    gp.monster[mapNum][i].worldY = gp.tileSize * 16;
+                    i++;
+                }
+
 
 
 

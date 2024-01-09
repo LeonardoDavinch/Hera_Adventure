@@ -3,6 +3,7 @@ package org.example;
 import org.example.Monsters.MON_SkeletonLord;
 import org.example.enty.Player;
 import org.example.enty.PlayerDummy;
+import org.example.object.OBJ_BlueHeart;
 import org.example.object.OBJ_Door;
 import org.example.object.OBJ_Door_Iron;
 
@@ -14,13 +15,27 @@ public class CutsceneManager {
     Graphics2D g2;
     public  int sceneNum;
     public  int scenePhase;
+    public  int counter = 0;
+    public  float alpha = 0f;
+    public  int y;
+    public  String endCredit;
 
     //scene number
     public  final  int NA = 0;
     public  final  int skeletonLord = 1;
-
+    public  final  int ending = 2;
     public  CutsceneManager(GamePanel gp){
         this.gp = gp;
+
+        endCredit = "Program/Music/Art\n"
+        +"RyiShow"
+        +"\n\n\n\n\n\n\n\n\n\n\n\n\n"
+        +"Special Thanks\n"
+        +"Erly Demo version\n"
+        +"Watabou\n"
+        +"Leonardo\n"
+        +"Someone\n\n\n\n\n\n"
+        +"Thank you for playing!";
     }
 
     public  void  draw(Graphics2D g2){
@@ -28,6 +43,7 @@ public class CutsceneManager {
 
         switch (sceneNum){
             case skeletonLord:scene_skeletonLord();break;
+            case ending: scene_ending();break;
         }
     }
     public  void scene_skeletonLord(){
@@ -118,5 +134,121 @@ public class CutsceneManager {
             gp.playSE(22);
         }
 
+    }
+    public  void  scene_ending(){
+
+        if(scenePhase == 0){
+
+            gp.stopMusic();
+            gp.ui.npc = new OBJ_BlueHeart(gp);
+            scenePhase++;
+
+        }
+        if(scenePhase == 1){
+            gp.ui.drawDialogeScreen();
+        }
+        if(scenePhase == 2){
+
+            gp.playSE(4);
+            scenePhase++;
+        }
+        if(scenePhase == 3){
+
+            if(counterReacted(300) == true ){
+                scenePhase++;
+            }
+
+        }
+        if(scenePhase == 4){
+            alpha += 0.005f;
+            if(alpha>1f){
+                alpha = 1f;
+            }
+            drawBlackBakground(alpha);
+
+            if(alpha == 1f){
+                alpha = 0;
+                scenePhase++;
+
+            }
+        }
+        if(scenePhase == 5){
+
+            drawBlackBakground(1f);
+            alpha += 0.005f;
+            if(alpha>1f){
+                alpha = 1f;
+            }
+            String text = "After the fierce battle with the Skeleton Lord,\n" +
+                    "the Gera boy finally found the legendary treasure.\n"+
+                    "But this is not the end of his journey.\n"+
+                    "The Gera boy's Adventure has just begun.";
+            drawString(alpha,38f,200,text,70);
+
+            if(counterReacted(600) == true){
+                gp.playMusic(0);
+                scenePhase++;
+            }
+        }
+        if(scenePhase == 6){
+
+            drawBlackBakground(1f);
+
+            drawString(1f, 120f, gp.screenHeight/2,"Gera Adventure", 40 );
+
+            if(counterReacted(480) == true){
+                scenePhase++;
+            }
+        }
+        if(scenePhase == 7 ){
+
+            y = gp.screenHeight/2;
+            drawBlackBakground(1f);
+
+            drawString(1f, 38f,y,endCredit,40);
+
+            if(counterReacted(480) == true){
+                scenePhase++;
+            }
+        }
+        if(scenePhase == 8){
+
+            drawBlackBakground(1f);
+
+            y--;
+            drawString(1f,38f,y,endCredit,40);
+        }
+    }
+    public  boolean counterReacted(int target){
+
+        boolean counterReacted = false;
+
+        counter++;
+        if(counter > target){
+            counterReacted = true;
+            counter = 0 ;
+        }
+        return  counterReacted ;
+
+    }
+    public  void drawBlackBakground(float alpha){
+
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha));
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0,0,gp.screenWidh ,gp.screenHeight);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1f));
+
+    }
+    public  void  drawString(float alpha,float foantSize,int y,String text , int lineHeight){
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha));
+        g2.setColor(Color.white);
+        g2.setFont(g2.getFont().deriveFont(foantSize));
+
+        for(String line : text.split("\n")){
+            int x = gp.ui.getXforCenterText(line);
+            g2.drawString(line ,x, y );
+            y += lineHeight ;
+        }
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha));
     }
 }

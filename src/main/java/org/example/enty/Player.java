@@ -53,11 +53,7 @@ public class Player extends  Entyti{
         //Dungeon b2
         gp.currentMap = 3;
         worldX = gp.tileSize * 25;
-        worldY = gp.tileSize * 29;
-
-
-
-
+        worldY = gp.tileSize * 14;
 
         defauldSpeed = 4;
         speed = defauldSpeed;
